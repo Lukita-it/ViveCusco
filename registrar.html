@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta</title>
+    <style>
+        html, body {
+            height: 100%; 
+            margin: 0; 
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            box-sizing: border-box;
+            display: flex; /* Flexbox para el cuerpo */
+            flex-direction: column; /* Dirección vertical */
+        }
+
+        header {
+            background-color: #fff;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        h1 {
+            text-align: center; 
+            flex-grow: 1; 
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px; /* Espacio entre botones */
+        }
+
+        .container {
+            max-width: 1000px; /* Ancho máximo */
+            min-width: 800px; /* Ancho mínimo para evitar que se vea delgado */
+            margin: 20px auto; 
+            padding: 30px; /* Padding añadido */
+            background-color: #fff; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            flex-grow: 1; /* Permite que el contenedor crezca y empuje el footer hacia abajo */
+        }
+
+        .form-group {
+            margin-bottom: 15px; /* Espacio entre grupos de formularios */
+        }
+
+        .form-row {
+            display: flex; 
+            justify-content: space-between; 
+        }
+
+        .form-row div {
+            flex: 1; /* Hace que los elementos ocupen el mismo espacio */
+            margin-right: 10px; /* Espacio entre columnas */
+        }
+
+        .form-row div:last-child {
+            margin-right: 0; /* Elimina el margen del último elemento */
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%; /* Hace que los inputs ocupen todo el ancho */
+            padding: 10px; 
+            border-radius: 4px; 
+            border: 1px solid #ccc; 
+        }
+
+        button {
+            padding: 10px; 
+            background-color: #333; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            width: 100%; /* Hace que el botón ocupe todo el ancho del contenedor */
+        }
+
+        button:hover {
+            background-color: #555; /* Cambia el color al pasar el mouse */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+
+        footer a {
+            margin-right: 20px; /* Espacio entre enlaces */
+            text-decoration: none; 
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Cuenta</h1>
+    <div class="buttons">
+        <a href="./administracion.html"><button>Administración</button></a>
+        <a href="./principal.html"><button>Principal</button></a>
+    </div>
+</header>
+
+<div class="container">
+    <h2>Registrar Cuenta</h2>
+    <div class="form-group form-row">
+        <div>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" placeholder="Nombre">
+        </div>
+    </div>
+    <div class="form-group form-row">
+        <div>
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" placeholder="Apellido">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Password">
+    </div>
+    <button>Registrarse</button>
+</div>
+
+<div class="container">
+    <h2>Ingresar Cuenta</h2>
+    <div class="form-group">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="Email">
+    </div>
+    <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Password">
+    </div>
+    <button>Ingresar</button>
+</div>
+
+<footer>
+    <a href="./info.html">Quienes somos?</a>
+    <a href="./contacto.html">Contactarse</a>
+    <a href="./privacy.html">Política de Privacidad</a>
+</footer>
+
+</body>
+</html>

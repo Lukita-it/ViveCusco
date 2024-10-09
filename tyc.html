@@ -39,7 +39,7 @@
 
         nav {
             flex-grow: 1; 
-            display: flex;
+            display: flex; 
             justify-content: center; 
         }
 
@@ -83,7 +83,7 @@
             max-width: 1200px;
             margin: 0 auto; 
             padding: 20px; 
-            text-align: center; 
+            text-align: center;
         }
 
         h1 {
@@ -91,57 +91,95 @@
             font-size: 28px; 
         }
 
-       .terms-content { 
-           max-width :800 px ; 
-           margin :20 px auto ; 
-           text-align:left ; 
+        .event-grid {
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+            margin: 0 50px; 
+        }
+
+        .event-card {
+            background-color: #fff; 
+            border: 1px solid #ddd;
+            padding: 20px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: space-between; 
+        }
+
+        .event-card img {
+            width: 100%; 
+            height: 150px; 
+            background-color: #eee; 
+            margin-bottom: 20px; 
+        }
+
+        .event-card h3 {
+            font-size: 18px; 
+            margin-bottom: 10px; 
+        }
+
+        .event-card p {
+            font-size: 14px; 
+            color:#666 ; 
+           margin-bottom :10 px ; 
+
        }
 
-       .terms-content p { 
-           font-size :16 px ; 
-           color :#333 ;  
-           margin-bottom :15 px ; 
-       }
+       .buy-btn {
+        display: inline-block;
+        background-color: #333; 
+        color: #fff; 
+        padding: 10px; 
+        text-decoration: none; 
+        font-size: 14px; 
+        border: none; 
+        cursor: pointer; 
+        text-align: center;
+    }
+
+        .buy-btn:hover {
+        background-color: #555; 
+        }
 
        footer { 
 
-margin-top:auto ; 
-padding :20 px ; 
-background-color:#fff ; 
-border-top :1 px solid #ddd ; 
+           margin-top:auto ; 
+           padding :20 px ; 
+           background-color:#fff ; 
+           border-top :1 px solid #ddd ; 
 
-}
+       }
 
-footer a { 
+       footer a { 
 
-text-decoration:none ; 
-color:#333 ; 
-font-size :14 px ; 
-margin :0 px 15 px ; 
+           text-decoration:none ; 
+           color:#333 ; 
+           font-size :14 px ; 
+           margin :0 px 15 px ; 
 
-}
+       }
 
-footer a:hover { 
+       footer a:hover { 
 
-text-decoration :underline ; 
+           text-decoration :underline ; 
 
-}
+       }
 
-.social { 
+       .social { 
 
-display:flex ; 
-justify-content:center ; 
-gap :20 px ; 
-margin-top :20 px ; 
+           display:flex ; 
+           justify-content:center ; 
+           gap :20 px ; 
+           margin-top :20 px ; 
 
-}
+       }
 
-.social img { 
-
-width :24 px ; 
-height :24 px ; 
-
-}
+       .social img {
+        width: 35px;
+        height: 35px;
+    }
    </style>
 </head>
 <body>
@@ -153,15 +191,15 @@ height :24 px ;
          </div>
          <nav>
              <ul>
-                 <li><a href="#">Principal</a></li>
-                 <li><a href="#">Info</a></li>
-                 <li><a href="#">Contacto</a></li>
+                <li><a href="./principal.html">Principal</a></li>
+                <li><a href="./info.html">Info</a></li>
+                <li><a href="./contacto.html">Contacto</a></li>
              </ul>
          </nav>
          <div class="buttons">
-             <button>Ingresar</button>
-             <button>Registrar</button>
-         </div>
+            <a href="./registrar.html" class="buy-btn">Ingresar</a>
+            <a href="./registrar.html" class="buy-btn">Registrar</a>
+        </div>
      </header>
 
      <div class="container">
@@ -191,12 +229,12 @@ height :24 px ;
      </div>
 
      <footer>
-         <a href="#">Política de Privacidad</a> | 
-         <a href="#">Términos y Condiciones</a>
-         <div class="social">
-             <a href="#"><img src="facebook-icon.png" alt="Facebook"></a>
-             <a href="#"><img src="instagram-icon.png" alt="Instagram"></a>
-         </div>
+        <a href="./privacy.html">Política de Privacidad</a> | 
+        <a href="./tyc.html">Términos y Condiciones</a>
+        <div class="social">
+            <a href="https://www.facebook.com/" target="_blank"><img src="./img/facebook.jpg" alt="Facebook"></a>
+            <a href="https://www.instagram.com/" target="_blank"><img src="./img/instagram.jpg" alt="Instagram"></a>
+        </div>
      </footer>
 
  </div>
