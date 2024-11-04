@@ -1,0 +1,126 @@
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin-left: auto; 
+    margin-right: 0; 
+}
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+
+  th {
+    background-color: #f2f2f2;
+  }
+
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+/* Estilos para la tabla */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  border: 1px solid #ddd; /* Agregar borde a la tabla */
+}
+
+/* Estilos para los encabezados */
+th {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd; /* Agregar borde inferior a los encabezados */
+}
+
+/* Estilos para las celdas */
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd; /* Agregar borde inferior a las celdas */
+  border-right: 1px solid #ddd; /* Agregar borde derecho a las celdas */
+}
+
+/* Estilos para las filas alternas */
+tr:nth-child(even) {
+  background-color: #f2f2f2; /* Agregar color de fondo gris claro a las filas alternas */
+}
+
+/* Estilos para el hover en las filas */
+tr:hover {
+  background-color: #e6e6e6; /* Agregar color de fondo gris claro al hover */
+}
+
+/* Estilos para la ventana emergente */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+  .card {
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex; /* Usa flexbox para controlar el diseño interno */
+    flex-direction: column;
+  }
+
+  .card-title {
+    font-size: 24px;
+    color: #333;
+    margin-left: 440px; /* Alinea el título a 50 píxeles a la derecha */
+}
+
+  .btn-floating {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #757575;
+  }
+
+  .btn-floating:hover {
+    background-color: #555;
+  }
+
+  .btn-floating.red {
+    background-color: #e57373;
+  }
+  
+
+
+
+.table-container {
+  margin-top: 20px; /* Ajusta la distancia entre el título y la tabla según sea necesario */
+}

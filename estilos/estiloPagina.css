@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;    
+}
+
+body {
+    font-family: cursive;
+    height: 900px;
+    min-height: 100vh;
+    background: #0c192c;
+}
+
+.titulo {
+    margin: 0px;
+    margin-top: 10px;
+    color: white;
+    text-align: center;
+}
+
+.opciones {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 30px;
+}
+
+.nav-bar {
+    display: flex;
+    gap: 15px;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    background: blue;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-bar a:hover {
+    background: rgb(0, 0, 126);
+}
+
+.cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.contenedor1 {
+    margin: 10px 30px 0px 30px;
+}
+
+.contenedor2 {
+    margin: 0px 30px 30px 30px;
+}
+
+.carta {
+    flex: 1 0 350px;
+    position: relative;
+    box-sizing: border-box;
+    margin: 20px;
+    width: 350px;
+    height: 400px;
+}
+
+.carta .face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: .5s;
+}
+
+.carta .front {
+    transform: perspective(600px) rotateY(0deg);
+    box-shadow: 0 5px 10px rgb(91, 0, 187);
+}
+
+.carta .front img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carta .front h3 {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 0;
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    background: rgba(0, 0, 0, .4);
+    text-align: center;
+}
+
+.carta .back {
+    transform: perspective(600px) rotateY(180deg);
+    background: rgb(3, 35, 54);
+    padding: 15px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    box-shadow: 0 5px 10px black;
+}
+
+.carta .back h3 {
+    font-size: 25px;
+}
+
+.carta .back p {
+    margin: 17px;
+    letter-spacing: 1px;
+}
+
+.carta:hover .front {
+    transform: perspective(600px) rotateY(180deg);
+}
+
+.carta:hover .back {
+    transform: perspective(600px) rotateY(360deg);
+}
+
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bubbles {
+    position: relative;
+    display: flex;
+}
+
+.bubbles span {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: rgb(70, 0, 192);
+    margin: 0 4px;
+    border-radius: 50%;
+    box-shadow: 0 0 0 10px #4fc3dc44,
+                0 0 50px rgb(70, 0, 192),
+                0 0 100px rgb(70, 0, 192);
+    animation: animate 15s linear infinite;
+    animation-duration: calc(125s / var(--i));
+}
+
+.bubbles span:nth-child(even) {
+    background: rgb(136, 0, 52);
+    box-shadow: 0 0 0 10px #4fc3dc44,
+                0 0 50px rgb(136, 0, 52),
+                0 0 100px rgb(136, 0, 52);
+}
+
+@keyframes animate {
+    0% {
+        transform: translateY(100vh) scale(0);
+    }
+    100% {
+        transform: translateY(-10vh) scale(1);
+    }
+}
+
+@media (max-width: 1170px) {
+    .cont {
+        display: flex;
+        flex-direction: column;
+    }
+    .carta {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 500px;
+    }
+
+    #cartaZoha {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 520px;
+    }
+
+    .bubbles span {
+        width: 15px;
+        height: 15px;
+    }
+
+    .background-animation {
+        background-attachment: fixed;
+        background-size: cover;
+    }
+}
+
+@media (max-width: 768px) {
+    .opciones {
+        flex-direction: column;
+        align-items: center;
+    }
+    .nav-bar {
+        margin-top: 10px;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+}
+
+@media (max-width: 501px) {
+    .bubbles span {
+        width: 300px;
+        height: 20px;
+    }
+    .bubbles span:nth-child(even) {
+        background: rgb(136, 0, 52);
+        box-shadow: 0 0 0 5px #4fc3dc44,
+                    0 0 5px rgb(136, 0, 52),
+                    0 0 10px rgb(136, 0, 52);
+    }
+}
+
+
+#logoPagina {
+    width: 300px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.styled-button {
+    background-color: blue;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.styled-button i {
+    font-size: 1.5em;
+}
+
+.styled-button:hover {
+    background-color: rgb(0, 0, 126);
+}
+
+.facebook {
+    width: 80px;
+    height: auto;
+    border-radius: 200px;
+}
+
+

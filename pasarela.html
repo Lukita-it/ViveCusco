@@ -19,11 +19,14 @@
         }
 
         header {
-            background-color: #fff;
+            background-color: rgb(255, 255, 255);
             padding: 10px 40px;
             display: flex;
             align-items: center;
             border-bottom: 1px solid #ddd;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .logo {
@@ -31,29 +34,57 @@
             font-weight: bold;
             display: flex;
             align-items: center;
+            color: #333;
         }
 
         nav {
-            flex-grow: 1; 
-            display: flex; 
-            justify-content: center; 
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
         }
 
         nav ul {
             list-style: none;
-            display: flex; 
-            margin: 0; 
-            padding: 0; 
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
         nav ul li {
-            margin: 0 15px; 
+            margin: 0 15px;
         }
 
         nav ul li a {
             text-decoration: none;
             color: #333;
             font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background-color: #1e90ff;
+            color: #fff;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .buttons a {
+            padding: 8px 20px;
+            border: 1px solid #333;
+            background-color: transparent;
+            color: #333;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .buttons a:hover {
+            background-color: #1e90ff;
+            color: #ffffff;
         }
 
         .main-container {
@@ -66,8 +97,10 @@
 
         .container {
             display: flex; 
-            width: 100%; 
+            width: 200%; 
             height: calc(100% - 80px); 
+            min-height: 500px; 
+            padding: 20px; 
         }
 
         .payment-methods, .ticket-summary {
@@ -78,12 +111,16 @@
         }
 
         .payment-methods {
-            width: calc(50% - 10px); 
-            margin-right: 20px; 
+            width: 500px; 
+            margin-right: 10px; 
+            min-height: 400px; 
+            padding: 70px; 
         }
 
         .ticket-summary {
-            width: calc(50% - 10px); 
+            width: 500px; 
+            min-height: 400px; 
+            padding: 70px; 
         }
 
         .payment-methods h2, .ticket-summary h2 {
@@ -97,65 +134,76 @@
         }
 
         .payment-button {
-            height: 50px; 
+            width: auto; 
+            height: 60px; 
             border-radius: 5px; 
             border: none; 
             cursor: pointer; 
-            
-            background-size: cover; 
+            background-size: contain; 
             background-position: center; 
             background-repeat: no-repeat; 
         }
 
-        .yape { background-image: url('./img/yape.jpg'); }
+        .yape { background-image: url('./img/yape4.jpg');}
         .pagoefectivo { background-image: url('./img/pagoefectivo.jpeg'); }
         .mercadopago { background-image: url('./img/mercadopago.jpg'); }
 
-        footer { 
-          padding: 20px; 
-          background-color: #fff; 
-          border-top: 1px solid #ddd;
-      }
-
-      footer a { 
-          text-decoration: none; 
-          color: #333; 
-          font-size: 14px; 
-      }
-
-      footer a:hover { 
-          text-decoration: underline; 
-      }
-    
-      .buy-btn {
-        display: inline-block;
-        background-color: #333; 
-        color: #fff; 
-        padding: 10px; 
-        text-decoration: none; 
-        font-size: 14px; 
-        border: none; 
-        cursor: pointer; 
-        text-align: center;
-    }
-
-        .buy-btn:hover {
-        background-color: #555; 
+        footer {
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #ddd;
+            margin-top: auto;
         }
 
-      .social { 
-          display: flex; 
-          justify-content: center; 
-          gap: 20px; 
-      }
+        footer a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+            margin: 0 15px;
+        }
 
-      .social img {
-          width: 35px;
-          height: 35px;
-      }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background-color: #008cf7;
+            color: #fff;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #ff4500;
+        }
+
+        .social {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social img {
+            width: 35px;
+            height: 35px;
+            filter: grayscale(100%);
+            transition: filter 0.3s;
+        }
+
+        .social img:hover {
+            filter: none;
+        }
     </style>
 </head>
 <body>
+    <div class="wrapper"></div>
     <header>
         <div class="logo">
             <span>🎵 Local</span>
@@ -174,41 +222,34 @@
     </header>
 
     <div class="main-container">
-        
+        <div class="container">
+            <div class="payment-methods">
+                <h2>Seleccionar Método de Pago</h2>
+                <div class="payment-buttons">
+                    <a href="https://www.yape.com.pe/" class="payment-button yape"></a>
+                    <a href="https://www.pagoefectivo.la/pe/" class="payment-button pagoefectivo"></a>
+                    <a href="https://www.mercadopago.com.pe/home" class="payment-button mercadopago"></a>
+                </div>
+            </div>
 
-      <div class="container">
-      
-          <div class="payment-methods">
-              <h2>Seleccionar Método de Pago</h2>
-              <div class="payment-buttons">
-                <a href="https://www.yape.com.pe/" class="payment-button yape"></a>
-                <a href="https://www.pagoefectivo.la/pe/" class="payment-button pagoefectivo"></a>
-                <a href="https://www.mercadopago.com.pe/home" class="payment-button mercadopago"></a>
-              </div>
-          </div>
-
-          <!-- Resumen de Entradas -->
-          <div class="ticket-summary">
-              <h2>Entradas</h2>
-              <ul style="list-style:none; padding-left:0;">
-                  <li>X2 VIP</li> 
-              </ul>
-              <p><strong>Total:</strong> S/XX.XX</p> 
-          </div>
-
-      </div>
-
+            <div class="ticket-summary">
+                <h2>Entradas</h2>
+                <ul style="list-style:none; padding-left:0;">
+                    <li>X2 VIP</li> 
+                </ul>
+                <p><strong>Total:</strong> S/XX.XX</p> 
+            </div>
+        </div>
     </div>
 
     <footer>
-      <a href="../privacy.html">Política de Privacidad</a> | 
-      <a href="../tyc.html">Términos y Condiciones</a>
-      <div class="social">
-          <a href="https://www.facebook.com/" target="_blank"><img src="./img/facebook.png" alt="Facebook"></a>
-          <a href="https://www.instagram.com/" target="_blank"><img src="./img/instagram.jpg" alt="Instagram"></a>
-          <a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="X"></a>
-      </div>
+        <a href="../privacy.html">Política de Privacidad</a> | 
+        <a href="../tyc.html">Términos y Condiciones</a>
+        <div class="social">
+            <a href="https://www.facebook.com/" target="_blank"><img src="./img/facebook.png" alt="Facebook"></a>
+            <a href="https://www.instagram.com/" target="_blank"><img src="./img/instagram.jpg" alt="Instagram"></a>
+            <a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="X"></a>
+        </div>
     </footer>
-
 </body>
 </html>

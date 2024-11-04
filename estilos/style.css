@@ -1,0 +1,288 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 2;
+    box-sizing: border-box;
+}
+/* Estilos para la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    border: 1px solid #ddd; /* Agregar borde a la tabla */
+}
+
+/* Estilos para los encabezados */
+th {
+    background-color: #f2f2f2;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Agregar borde inferior a los encabezados */
+}
+
+/* Estilos para las celdas */
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd; /* Agregar borde inferior a las celdas */
+    border-right: 1px solid #ddd; /* Agregar borde derecho a las celdas */
+}
+
+/* Estilos para las filas alternas */
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Agregar color de fondo gris claro a las filas alternas */
+}
+
+/* Estilos para el hover en las filas */
+tr:hover {
+    background-color: #e6e6e6; /* Agregar color de fondo gris claro al hover */
+}
+
+/* Estilos para la ventana emergente */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navbar .logo {
+    height: 60px;
+    margin-left: 20px; /* Ajustar según el espacio deseado */
+    filter: invert(1) brightness(300%); /* Ajuste del filtro para convertir el logo azul a blanco */
+}
+
+.navbar h1 {
+    flex-grow: 1;
+    text-align: center;
+    margin: 0;
+    font-size: 20px;
+}
+
+.navbar .user-profile {
+    display: flex;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+.navbar .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid white;
+}
+
+.navbar .profile-menu {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    color: black;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 1;
+    min-width: 200px; /* Hacer el menú más ancho */
+}
+
+.navbar .profile-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: black;
+    transition: background-color 0.3s;
+}
+
+.navbar .profile-menu a:hover {
+    background-color: #f0f0f0;
+}
+
+.navbar .profile-menu a i {
+    margin-left: auto;
+    color: #333;
+}
+
+.user-profile.open .profile-menu {
+    display: block;
+}
+
+/* Estilo para el botón de menú */
+#menuButton {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: block; /* Asegura que el botón de menú esté siempre visible */
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: row;
+        justify-content: center; /* Alinea los elementos al centro en pantallas pequeñas */
+    }
+
+    .navbar .logo {
+        margin-bottom: 10px; /* Agrega espacio entre el logo y los demás elementos */
+    }
+
+    #menuButton {
+        display: block; /* Asegura que el botón de menú esté siempre visible */
+        margin-bottom: 10px; /* Agrega espacio entre el botón de menú y los demás elementos */
+    }
+
+    .user-profile {
+        margin-top: 10px; /* Agrega espacio entre el botón de menú y el perfil de usuario */
+    }
+    .navbar #menuButton {
+        margin-right: auto; /* Mueve el botón de menú hacia la derecha */
+        margin-left: 20px; /* Agrega espacio entre el botón de menú y el título */
+    }
+
+    .navbar h1 {
+        margin-left: auto; /* Mueve el título hacia la derecha */
+        margin-right: auto; /* Mueve el título hacia la izquierda */
+    }
+    .content {
+        margin-left: 20px; /* Agrega espacio entre el contenido y el borde izquierdo */
+        margin-right: 20px; /* Agrega espacio entre el contenido y el borde derecho */
+    }
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.navbar button i {
+    color: white; /* Asegura que el icono sea blanco */
+}
+
+.sidebar {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 80px;
+    left: 0; /* Mostrado por defecto */
+    background-color: #333;
+    overflow-x: hidden;
+    padding-top: 20px;
+    transition: left 0.5s; /* Agregar transición para el desplazamiento */
+}
+
+.sidebar.closed {
+    left: -250px; /* Ocultar cuando se reduzca la pantalla */
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+.sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #575757;
+}
+
+.content {
+    margin-top: 80px;
+    margin-left: 270px; /* Ajustar según el ancho del sidebar */
+    padding: 20px;
+    box-sizing: border-box;
+    width: calc(100% - 270px);
+}
+
+/* Estilos para el botón de menú */
+.navbar #menuButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 20px; /* Ajustar según el espacio deseado */
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row; /* Mantener los elementos en la misma fila */
+        justify-content: flex-end; /* Alinear el botón de menú a la derecha */
+    }
+
+    .navbar #menuButton {
+        margin-right: 10px; /* Espacio entre el botón de menú y el borde derecho */
+        margin-top: 10px; /* Espacio entre el botón de menú y el borde superior */
+    }
+
+    .navbar h1 {
+        margin-left: 10px; /* Ajuste para dejar espacio entre el título y el borde izquierdo */
+    }
+
+    .sidebar {
+        width: 250px; /* Mostrar sidebar */
+        left: -250px; /* Inicialmente oculto */
+        transition: left 0.5s; /* Agregar transición */
+    }
+
+    .sidebar.closed {
+        left: 0; /* Mostrar sidebar cuando se haga clic en el botón de menú */
+    }
+
+    .content {
+        margin-left: 0; /* Contenido alineado a la izquierda */
+        width: 100%; /* Ancho completo */
+    }
+}
