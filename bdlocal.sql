@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Nov 04, 2024 alle 16:41
+-- Creato il: Nov 05, 2024 alle 11:01
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -33,14 +33,14 @@ CREATE TABLE `administrador` (
   `apellidoAdministrador` varchar(100) NOT NULL,
   `dniAdministrador` char(8) NOT NULL,
   `correoAdministrador` varchar(100) NOT NULL,
-  `contraseñaAdministrador` varchar(100) NOT NULL
+  `contrasenaAdministrador` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `administrador`
 --
 
-INSERT INTO `administrador` (`idAdministrador`, `nombreAdministrador`, `apellidoAdministrador`, `dniAdministrador`, `correoAdministrador`, `contraseñaAdministrador`) VALUES
+INSERT INTO `administrador` (`idAdministrador`, `nombreAdministrador`, `apellidoAdministrador`, `dniAdministrador`, `correoAdministrador`, `contrasenaAdministrador`) VALUES
 (1, 'Carlos', 'Ramirez', '11223344', 'carlos.ramirez@example.com', 'admin123'),
 (2, 'Ana', 'Martinez', '55667788', 'ana.martinez@example.com', 'admin456');
 
@@ -56,16 +56,16 @@ CREATE TABLE `cliente` (
   `apellidoCliente` varchar(100) NOT NULL,
   `dniCliente` char(8) NOT NULL,
   `correoCliente` varchar(100) NOT NULL,
-  `contraseñaCliente` varchar(100) NOT NULL
+  `contrasenaCliente` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `cliente`
 --
 
-INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `dniCliente`, `correoCliente`, `contraseñaCliente`) VALUES
-(1, 'Juan', 'Perez', '12345678', 'juan.perez@example.com', 'unodostres123'),
-(2, 'Maria', 'Lopez', '87654321', 'maria.lopez@example.com', 'cuatrocincoseis456');
+INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `dniCliente`, `correoCliente`, `contrasenaCliente`) VALUES
+(6, 'Fran', 'Marino', '69305968', 'marino@gmail.com', '$2y$10$CKmVzOAt7eXdukuE6H/bauq7XSWBrkcEIHi6eEC3o9ekxGwzEULiK'),
+(7, 'Miriam', 'Villa', '59396039', 'villa@gmail.com', '$2y$10$IWKKsSvTWNMip8OUCT1oyu0CI5xVqhvBdL9pmuHt1JC/6LJKBM9eS');
 
 -- --------------------------------------------------------
 
@@ -113,9 +113,9 @@ CREATE TABLE `evento` (
 --
 
 INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `imagenEvento`) VALUES
-(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 500, 'img/rock.jpeg'),
-(2, 'Concierto Javier Solis', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Concierto', 500, 'img/javier.jpg'),
-(3, 'Noche Electronica', 'Disfruta de una noche llena de energía con los mejores DJs de música electrónica.', '2024-12-15 20:00:00', 'Concierto', 500, 'img/noche.jpg');
+(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 173, 'img/rock.jpeg'),
+(2, 'Concierto Javier Solis', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Concierto', 50, 'img/javier.jpg'),
+(3, 'Noche Electronica', 'Disfruta de una noche llena de energía con los mejores DJs de música electrónica.', '2024-12-15 20:00:00', 'Concierto', 156, 'img/noche.jpg');
 
 -- --------------------------------------------------------
 
@@ -133,15 +133,6 @@ CREATE TABLE `reserva` (
   `estadoReserva` enum('PENDIENTE','CONFIRMADA','CANCELADA') NOT NULL,
   `idTransaccion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dump dei dati per la tabella `reserva`
---
-
-INSERT INTO `reserva` (`idReserva`, `idCliente`, `idEntrada`, `fechahoraReserva`, `cantidadEntradaReserva`, `tipoEntradaReserva`, `estadoReserva`, `idTransaccion`) VALUES
-(1, 1, 1, '2024-12-01 12:30:00', 2, 'General', 'PENDIENTE', 1),
-(2, 2, 2, '2024-12-01 14:00:00', 1, 'VIP', 'CONFIRMADA', 2),
-(3, 1, 3, '2024-11-18 10:15:00', 3, 'General', 'CANCELADA', NULL);
 
 -- --------------------------------------------------------
 
@@ -163,8 +154,8 @@ CREATE TABLE `transaccion` (
 --
 
 INSERT INTO `transaccion` (`idTransaccion`, `montoTransaccion`, `fechahoraTransaccion`, `estadoTransaccion`, `tipopagoTransaccion`, `idReserva`) VALUES
-(1, 100.00, '2024-12-01 12:35:00', 'COMPLETADA', 'Yape', 1),
-(2, 100.00, '2024-12-01 14:05:00', 'COMPLETADA', 'PagoEfectivo', 2);
+(1, 100.00, '2024-12-01 12:35:00', 'COMPLETADA', 'Yape', NULL),
+(2, 100.00, '2024-12-01 14:05:00', 'COMPLETADA', 'PagoEfectivo', NULL);
 
 --
 -- Indici per le tabelle scaricate
@@ -229,7 +220,7 @@ ALTER TABLE `administrador`
 -- AUTO_INCREMENT per la tabella `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `entrada`

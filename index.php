@@ -1,9 +1,10 @@
+<?php include './conexion.php'; ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quienes Somos</title>
+    <title>Próximos Eventos</title>
     <style>
         html, body {
             height: 100%; 
@@ -14,14 +15,21 @@
         }
 
         body {
-            background-color: #f5f5f5;
-            color: #333;
+            background-image: url('./img/back-blu.jpg'); 
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+            background-repeat: no-repeat;
+            margin: 0;
+            padding: 0;
+            color: #ffffff;
         }
 
         .wrapper {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            backdrop-filter: brightness(0.8); 
         }
 
         header {
@@ -95,57 +103,96 @@
 
         .container {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
             text-align: center;
             position: relative;
             z-index: 1;
             min-height: 100vh;
-            color: #fff;
-        }
-
-        .container::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('./img/local.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            filter: brightness(0.4);
-            z-index: -1;
         }
 
         h1 {
-            font-size: 52px;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            margin-bottom: 40px;
+            font-size: 36px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        p.image-description {
-            font-size: 22px;
-            line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-            background: rgba(0, 0, 0, 0.4);
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border: none;
             padding: 20px;
-            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .event-card img {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .event-card:hover img {
+            opacity: 0.8;
+        }
+
+        .event-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .event-card p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            display: inline-block;
+            background-color: #008cf7;
+            color: #fff;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            background-color: #ff4500;
         }
 
         footer {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgb(255, 255, 255);
             padding: 20px;
             text-align: center;
             border-top: 1px solid #ddd;
             margin-top: auto;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
         }
 
         footer a {
@@ -153,11 +200,10 @@
             color: #333;
             font-size: 14px;
             margin: 0 15px;
-            transition: color 0.3s;
         }
 
         footer a:hover {
-            color: #1e90ff;
+            text-decoration: underline;
         }
 
         .social {
@@ -168,16 +214,14 @@
         }
 
         .social img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 35px;
+            height: 35px;
             filter: grayscale(100%);
-            transition: filter 0.3s, transform 0.3s;
+            transition: filter 0.3s;
         }
 
         .social img:hover {
             filter: none;
-            transform: scale(1.1);
         }
     </style>
 </head>
@@ -202,14 +246,32 @@
     </header>
 
     <div class="container">
-        <h1>¡TUS MEJORES EVENTOS 🎵!</h1>
-        <p class="image-description">
-            ¡Hola! Nos encanta que estés aquí. Somos un espacio creado para los amantes de la música, los eventos y la cultura local. Ya sea que estés buscando tu próxima experiencia en vivo o simplemente quieras mantenerte al tanto de las novedades, estás en el lugar correcto.
-            <br><br>
-            Únete a nosotros para descubrir los mejores eventos locales, conocer artistas emergentes y disfrutar de experiencias inolvidables. ¡Explora, conecta y regresa siempre que quieras, porque aquí siempre tendrás algo nuevo que disfrutar!
-            <br><br>
-            ¿Listo para comenzar? Navega por nuestras secciones y ¡que empiece la diversión!
-        </p>
+        <h1>Próximos Eventos</h1>
+        <div class="event-grid">
+        <?php
+include 'conexion.php'; // Asegúrate de que la ruta es correcta
+$sql = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento,capacidadEvento, imagenEvento FROM evento";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    while($evento = $result->fetch_assoc()) {
+        echo '<div class="event-card">';
+        echo '<img src="' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
+        echo '<h3>' . $evento['nombreEvento'] . '</h3>';
+        echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
+        echo '<p>' . $evento['descripcionEvento'] . '</p>';
+        echo '<p>Entradas disponibles: ' . $evento['capacidadEvento'] . '</p>';
+        echo '<a href="./eventos/evento.php?id=' . $evento['idEvento'] . '" class="buy-btn">Comprar Entradas</a>';
+        echo '</div>';
+    }
+} else {
+    echo '<p>No hay eventos disponibles.</p>';
+}
+
+$conn->close(); // Cierra la conexión
+?>
+
+        </div>
     </div>
 
     <footer>
@@ -217,12 +279,10 @@
         <a href="./tyc.html">Términos y Condiciones</a>
         <div class="social">
             <a href="https://www.facebook.com/" target="_blank"><img src="./img/facebook.png" alt="Facebook"></a>
-            <a href="https://www.instagram.com/" target="_blank"><img src="./img/instagram.jpg" alt="Instagram"></a>
-            <a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="X"></a>
+            <a href="https://www.instagram.com/" target="_blank"><img src="./img/instagram.png" alt="Instagram"></a>
+            <a href="https://www.x.com/" target="_blank"><img src="./img/x.png" alt="Twitter"></a>
         </div>
     </footer>
-
 </div>
-
 </body>
 </html>
