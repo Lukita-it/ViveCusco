@@ -5,8 +5,12 @@ include '../conexion.php';
 // Obtiene el id del evento desde la URL
 $idEvento = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Consulta para obtener los detalles del evento
-$sql = "SELECT nombreEvento, descripcionEvento, fechahoraevento, imagenEvento, capacidadEvento FROM evento WHERE IdEvento = ?";
+// Consulta para obtener los detalles del evento, incluyendo entradas generales y VIP
+$sql = "SELECT nombreEvento, descripcionEvento, fechahoraevento, imagenEvento,
+               entradasGeneralEvento, entradasVipEvento,
+               (entradasGeneralEvento + entradasVipEvento) AS entradasDisponiblesEvento 
+        FROM evento 
+        WHERE IdEvento = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $idEvento);
 $stmt->execute();
@@ -22,7 +26,6 @@ if ($result->num_rows > 0) {
 $stmt->close();
 
 // Consulta para obtener los tipos de entrada y su costo del evento
-// Consulta para obtener los tipos de entrada y su costo del evento
 $sqlEntradas = "SELECT tipoEntrada, costoEntrada FROM entrada WHERE IdEvento = ?";
 $stmtEntradas = $conn->prepare($sqlEntradas);
 $stmtEntradas->bind_param("i", $idEvento);
@@ -31,15 +34,13 @@ $resultEntradas = $stmtEntradas->get_result();
 
 $entradas = [];
 while ($entrada = $resultEntradas->fetch_assoc()) {
-    $entradas[] = $entrada; // Almacena las entradas en un array
+    $entradas[] = $entrada;
 }
 
 // Cierra la conexión a la base de datos
 $stmtEntradas->close();
 $conn->close();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -287,6 +288,20 @@ $conn->close();
             <a href="../login/login.html" class="buy-btn">Ingresar</a>
             <a href="../login/registro_usuario.html" class="buy-btn">Registrar</a>
         </div>
+        <script>
+        // JavaScript para cambiar el máximo de cantidad según el tipo de entrada seleccionado
+        function actualizarMaximo() {
+            const tipoEntrada = document.getElementById("tipoEntrada").value;
+            const cantidadInput = document.getElementById("cantidad");
+
+            // Ajusta el máximo basado en el tipo de entrada
+            if (tipoEntrada === "General") {
+                cantidadInput.max = <?php echo $evento['entradasGeneralEvento']; ?>;
+            } else if (tipoEntrada === "Vip") {
+                cantidadInput.max = <?php echo $evento['entradasVipEvento']; ?>;
+            }
+        }
+    </script>
     </header>
 
     <div class="container">
@@ -295,54 +310,51 @@ $conn->close();
         <h2><?php echo htmlspecialchars($evento['nombreEvento']); ?></h2>
 
         <div class="event-details">
-    <img src="<?php echo htmlspecialchars($evento['imagenEvento']); ?>" alt="Evento <?php echo htmlspecialchars($evento['nombreEvento']); ?>">
-    <div class="event-info">
-        <p><strong>Fecha:</strong> <?php echo date('d M Y', strtotime($evento['fechahoraevento'])); ?></p>
-        <p><strong>Descripción:</strong> <?php echo htmlspecialchars($evento['descripcionEvento']); ?></p>
-        <p><strong>Capacidad:</strong> <?php echo htmlspecialchars($evento['capacidadEvento']); ?> entradas</p>
+            <img src="<?php echo htmlspecialchars($evento['imagenEvento']); ?>" alt="Evento <?php echo htmlspecialchars($evento['nombreEvento']); ?>">
+            <div class="event-info">
+                <p><strong>Fecha:</strong> <?php echo date('d M Y', strtotime($evento['fechahoraevento'])); ?></p>
+                <p><strong>Descripción:</strong> <?php echo htmlspecialchars($evento['descripcionEvento']); ?></p>
+                
+                <!-- Filas de Entradas General y Entradas Vip -->
+                <p><strong>Entradas General:</strong> <?php echo htmlspecialchars($evento['entradasGeneralEvento']); ?> disponibles</p>
+                <p><strong>Entradas Vip:</strong> <?php echo htmlspecialchars($evento['entradasVipEvento']); ?> disponibles</p>
 
-        <!-- Mostrar tipos de entrada y sus costos -->
-        <p><strong>Tipos de Entrada:</strong></p>
-        <ul>
-            <?php foreach ($entradas as $entrada): ?>
-                <li><?php echo htmlspecialchars($entrada['tipoEntrada']) . ": S/" . number_format($entrada['costoEntrada'], 2); ?></li>
-            <?php endforeach; ?>
-        </ul>
-    </div>
-</div>
-
-
-
-        <div class="entry-section">
-
-        <div class="entry-section">
-    <form action="../pasarela.php" method="POST">
-        <div class="entry-label">Entradas</div>
-
-        <div class="entry-selection">
-            <label for="tipoEntrada">Tipo de Entrada:</label>
-            <select name="tipoEntrada" id="tipoEntrada" required>
-                <?php foreach ($entradas as $entrada): ?>
-                    <option value="<?php echo htmlspecialchars($entrada['tipoEntrada']); ?>">
-                        <?php echo htmlspecialchars($entrada['tipoEntrada']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-
-            <label for="cantidad">Cantidad:</label>
-            <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo $evento['capacidadEvento']; ?>" required placeholder="Nro">
+                <!-- Mostrar tipos de entrada y sus costos -->
+                <p><strong>Tipos de Entrada:</strong></p>
+                <ul>
+                    <?php foreach ($entradas as $entrada): ?>
+                        <li><?php echo htmlspecialchars($entrada['tipoEntrada']) . ": S/" . number_format($entrada['costoEntrada'], 2); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
         </div>
 
-        <!-- Campo oculto para pasar el ID del evento -->
-        <input type="hidden" name="idEvento" value="<?php echo htmlspecialchars($idEvento); ?>">
+        <div class="entry-section">
+            <form action="../pasarela.php" method="POST">
+                <div class="entry-label">Entradas</div>
 
-        <!-- Botón de envío -->
-        <button type="submit" class="buy-btn" style="margin-top: 20px;">Comprar</button>
-    </form>
-</div>
+                <div class="entry-selection">
+                    <label for="tipoEntrada">Tipo de Entrada:</label>
+                    <select name="tipoEntrada" id="tipoEntrada" onchange="actualizarMaximo()" required>
+                        <?php foreach ($entradas as $entrada): ?>
+                            <option value="<?php echo htmlspecialchars($entrada['tipoEntrada']); ?>">
+                                <?php echo htmlspecialchars($entrada['tipoEntrada']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" name="cantidad" id="cantidad" min="1" max="<?php echo $evento['entradasGeneralEvento']; ?>" required placeholder="Nro">
+                </div>
+
+                <!-- Campo oculto para pasar el ID del evento -->
+                <input type="hidden" name="idEvento" value="<?php echo htmlspecialchars($idEvento); ?>">
+
+                <!-- Botón de envío -->
+                <button type="submit" class="buy-btn" style="margin-top: 20px;">Comprar</button>
+            </form>
         </div>
     </div>
-
 
     <footer>
         <a href="../privacy.html">Política de Privacidad</a> | 

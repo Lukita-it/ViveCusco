@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Nov 05, 2024 alle 11:01
+-- Creato il: Nov 14, 2024 alle 18:45
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -56,16 +56,17 @@ CREATE TABLE `cliente` (
   `apellidoCliente` varchar(100) NOT NULL,
   `dniCliente` char(8) NOT NULL,
   `correoCliente` varchar(100) NOT NULL,
-  `contrasenaCliente` varchar(100) NOT NULL
+  `contrasenaCliente` varchar(100) NOT NULL,
+  `imagenCliente` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `cliente`
 --
 
-INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `dniCliente`, `correoCliente`, `contrasenaCliente`) VALUES
-(6, 'Fran', 'Marino', '69305968', 'marino@gmail.com', '$2y$10$CKmVzOAt7eXdukuE6H/bauq7XSWBrkcEIHi6eEC3o9ekxGwzEULiK'),
-(7, 'Miriam', 'Villa', '59396039', 'villa@gmail.com', '$2y$10$IWKKsSvTWNMip8OUCT1oyu0CI5xVqhvBdL9pmuHt1JC/6LJKBM9eS');
+INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `dniCliente`, `correoCliente`, `contrasenaCliente`, `imagenCliente`) VALUES
+(6, 'Marino', 'Villa', '69305968', 'marino@gmail.com', '$2y$10$CKmVzOAt7eXdukuE6H/bauq7XSWBrkcEIHi6eEC3o9ekxGwzEULiK', ''),
+(7, 'Miriam', 'Villa', '59396039', 'villa@gmail.com', '$2y$10$IWKKsSvTWNMip8OUCT1oyu0CI5xVqhvBdL9pmuHt1JC/6LJKBM9eS', '');
 
 -- --------------------------------------------------------
 
@@ -105,6 +106,8 @@ CREATE TABLE `evento` (
   `fechahoraEvento` datetime NOT NULL,
   `categoriaEvento` varchar(50) DEFAULT NULL,
   `capacidadEvento` int(11) NOT NULL,
+  `entradasGeneralEvento` int(11) NOT NULL,
+  `entradasVipEvento` int(11) NOT NULL,
   `imagenEvento` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -112,10 +115,10 @@ CREATE TABLE `evento` (
 -- Dump dei dati per la tabella `evento`
 --
 
-INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `imagenEvento`) VALUES
-(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 173, 'img/rock.jpeg'),
-(2, 'Concierto Javier Solis', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Concierto', 50, 'img/javier.jpg'),
-(3, 'Noche Electronica', 'Disfruta de una noche llena de energía con los mejores DJs de música electrónica.', '2024-12-15 20:00:00', 'Concierto', 156, 'img/noche.jpg');
+INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `entradasGeneralEvento`, `entradasVipEvento`, `imagenEvento`) VALUES
+(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 173, 94, 15, 'img/rock.jpeg'),
+(2, 'Concierto Javier Solis', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg'),
+(3, 'Noche Electronica', 'Disfruta de una noche llena de energía con los mejores DJs de música electrónica.', '2024-12-15 20:00:00', 'Concierto', 156, 71, 32, 'img/noche.jpg');
 
 -- --------------------------------------------------------
 
@@ -232,7 +235,7 @@ ALTER TABLE `entrada`
 -- AUTO_INCREMENT per la tabella `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT per la tabella `reserva`

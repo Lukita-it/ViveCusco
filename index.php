@@ -250,7 +250,11 @@
         <div class="event-grid">
         <?php
 include 'conexion.php'; // Asegúrate de que la ruta es correcta
-$sql = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento,capacidadEvento, imagenEvento FROM evento";
+$sql = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento,
+               entradasGeneralEvento, entradasVipEvento,
+               (entradasGeneralEvento + entradasVipEvento) AS entradasDisponiblesEvento,
+               imagenEvento 
+        FROM evento";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -260,7 +264,7 @@ if ($result->num_rows > 0) {
         echo '<h3>' . $evento['nombreEvento'] . '</h3>';
         echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
         echo '<p>' . $evento['descripcionEvento'] . '</p>';
-        echo '<p>Entradas disponibles: ' . $evento['capacidadEvento'] . '</p>';
+        echo '<p>Entradas disponibles: ' . $evento['entradasDisponiblesEvento'] . '</p>'; // Aquí se utiliza la suma calculada
         echo '<a href="./eventos/evento.php?id=' . $evento['idEvento'] . '" class="buy-btn">Comprar Entradas</a>';
         echo '</div>';
     }
@@ -270,6 +274,7 @@ if ($result->num_rows > 0) {
 
 $conn->close(); // Cierra la conexión
 ?>
+
 
         </div>
     </div>

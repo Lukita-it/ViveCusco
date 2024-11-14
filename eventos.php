@@ -4,7 +4,7 @@
 include 'conexion.php'; // Incluye tu archivo de conexión
 
 // Consulta para obtener eventos
-$sql = "SELECT idEvento,nombreEvento, descripcionEvento, fechahoraevento,capacidadEvento, imagenEvento FROM evento";
+$sql = "SELECT idEvento,nombreEvento, descripcionEvento, fechahoraevento,capacidadEvento,entradasDisponiblesEvento, imagenEvento FROM evento";
 $result = $conn->query($sql);
 
 // Crear un array para almacenar los eventos

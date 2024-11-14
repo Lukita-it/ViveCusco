@@ -164,6 +164,9 @@
         $fechahoraEvento = $_POST['fechahoraEvento'];
         $categoriaEvento = $_POST['categoriaEvento'];
         $capacidadEvento = $_POST['capacidadEvento'];
+        $entradasGeneralEvento = $_POST['entradasGeneralEvento'];
+        $entradasVipEvento = $_POST['entradasVipEvento'];
+
 
         // Manejo de la imagen
         $directorio = "../img/";  // Directorio donde se guardará la imagen
@@ -198,8 +201,8 @@
         if ($uploadOk == 1) {
             if (move_uploaded_file($_FILES["imagenEvento"]["tmp_name"], $rutaCompleta)) {
                 // Insertar el evento en la base de datos
-                $sql = "INSERT INTO evento (nombreEvento, descripcionEvento, fechahoraEvento, categoriaEvento, capacidadEvento, imagenEvento) 
-                        VALUES ('$nombreEvento', '$descripcionEvento', '$fechahoraEvento', '$categoriaEvento', $capacidadEvento, '$rutaRelativa')";
+                $sql = "INSERT INTO evento (nombreEvento, descripcionEvento, fechahoraEvento, categoriaEvento, capacidadEvento, imagenEvento, entradasGeneralEvento, entradasVipEvento) 
+        VALUES ('$nombreEvento', '$descripcionEvento', '$fechahoraEvento', '$categoriaEvento', $capacidadEvento, '$rutaRelativa', $entradasGeneralEvento, $entradasVipEvento)";
 
                 if ($conn->query($sql) === TRUE) {
                     echo "Nuevo evento creado con éxito";
@@ -245,6 +248,12 @@
 
                 <label for="capacidadEvento">Capacidad del Evento:</label>
                 <input type="number" id="capacidadEvento" name="capacidadEvento" required>
+
+                <label for="entradasGeneralEvento">Entradas Generales:</label>
+<input type="number" id="entradasGeneralEvento" name="entradasGeneralEvento" required>
+
+<label for="entradasVipEvento">Entradas VIP:</label>
+<input type="number" id="entradasVipEvento" name="entradasVipEvento" required>
 
                 <label for="imagenEvento">Imagen del Evento:</label>
                 <input type="file" id="imagenEvento" name="imagenEvento" accept="image/*" required>

@@ -9,22 +9,24 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
+
         body {
             display: flex;
             min-height: 100vh;
+            background-color: #eef2f3;
         }
-        
+
         /* Barra lateral */
         .sidebar {
             width: 250px;
-            background-color: #f4f4f4;
+            background-color: #4a90e2;
             padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
+            color: white;
         }
 
         .sidebar h2 {
@@ -41,9 +43,16 @@
 
         .sidebar a {
             font-size: 16px;
-            color: #333;
+            color: white;
             text-decoration: none;
             margin: 10px 0;
+            transition: background 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+
+        .sidebar a:hover {
+            background-color: #357ABD;
         }
 
         /* Contenido principal */
@@ -51,15 +60,18 @@
             flex: 1;
             padding: 20px;
             background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .main-content h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 10px;
+            color: #333;
         }
 
         .main-content p {
-            font-size: 14px;
+            font-size: 16px;
             color: #666;
             margin-bottom: 20px;
         }
@@ -74,19 +86,15 @@
             flex: 1;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             padding: 20px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
         }
 
         .box h3 {
-            font-size: 18px;
+            font-size: 20px;
             margin-bottom: 15px;
-        }
-
-        .event-list, .sales-chart {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            color: #4a90e2;
         }
 
         .event-list table {
@@ -96,27 +104,36 @@
         }
 
         .event-list table th, .event-list table td {
-            padding: 8px;
+            padding: 12px;
             border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        .event-list table th {
+            background-color: #f1f1f1;
         }
 
         .button {
             margin-top: 15px;
             padding: 10px 20px;
-            background-color: #ddd;
-            border: 1px solid #aaa;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
             border-radius: 5px;
             cursor: pointer;
+            transition: background 0.3s;
         }
 
         .button:hover {
-            background-color: #ccc;
+            background-color: #357ABD;
         }
 
         /* Estilo para gráfico de pastel (simulado con SVG) */
         .pie-chart {
-            width: 100px;
-            height: 100px;
+            width: 120px; /* Ajusta el ancho según tus necesidades */
+            height: auto;  /* Mantiene la proporción */
+            display: block;
+            margin: 20px auto;
         }
 
         .pie-chart circle {
@@ -164,7 +181,7 @@
                     // Verificar si hay resultados y mostrarlos
                     if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
-                            echo "<tr><td>" . htmlspecialchars($row['nombreEvento']);
+                            echo "<tr><td>" . htmlspecialchars($row['nombreEvento']) . "</td></tr>";
                         }
                     } else {
                         echo "<tr><td colspan='2'>No hay eventos disponibles</td></tr>";
@@ -172,19 +189,16 @@
                     ?>
                 </table>
                 <a href="lista_eventos.php">
-    <button class="button">Ver Eventos</button>
-</a>
+                    <button class="button">Ver Eventos</button>
+                </a>
             </div>
             
-            <!-- Cuadro de estadísticas de ventas (puedes adaptar esto según los datos disponibles en tu base) -->
+            <!-- Cuadro de estadísticas de ventas -->
             <div class="box sales-chart">
                 <h3>Ventas de Entradas</h3>
-                <svg class="pie-chart" viewBox="0 0 32 32">
-                    <circle class="event1" r="16" cx="16" cy="16" stroke-dasharray="25 75"></circle>
-                    <circle class="event2" r="16" cx="16" cy="16" stroke-dasharray="15 85"></circle>
-                    <circle class="event3" r="16" cx="16" cy="16" stroke-dasharray="10 90"></circle>
-                </svg>
-                <button class="button">Ver Estadísticas</button>
+                <img src="../img/grafico.png" alt="Gráfico Circular de Ventas" class="pie-chart">
+                <a href="estadisticas.php">
+                <button class="button">Ver Estadísticas</button></a>
             </div>
         </div>
     </div>
