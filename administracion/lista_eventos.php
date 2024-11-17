@@ -5,31 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Administración</title>
     <style>
-        /* Reset y estilos generales */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        /* Estilos del cuerpo */
+
         body {
             display: flex;
             min-height: 100vh;
-            background-color: #f5f5f5;
-            font-family: Arial, sans-serif;
+            background-color: #eef2f3;
         }
-        
-        /* Barra lateral */
+
         .sidebar {
             width: 250px;
-            background-color: #f4f4f4;
-            padding: 20px;
+            background-color: #1466c3;
+            padding: 45px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            color: black;
         }
 
         .sidebar h2 {
@@ -46,87 +42,103 @@
 
         .sidebar a {
             font-size: 16px;
-            color: #333;
+            color: white;
             text-decoration: none;
             margin: 10px 0;
+            transition: background 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
         .sidebar a:hover {
-            text-decoration: underline;
+            background-color: #357ABD;
         }
 
-        /* Contenedor del contenido principal */
         .main-content {
             flex: 1;
             padding: 20px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .main-content h1 {
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             color: #333;
             margin-bottom: 20px;
         }
 
+        /* Estilos de la tabla */
         .event-list table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
-            background-color: #fafafa;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #e3f2fd; /* Celeste pastel */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
         }
 
-        /* Estilos de la tabla */
-        th, td {
+        .event-list table th, .event-list table td {
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid #ddd;
+            color: #333;
         }
 
-        th {
-            background-color: #e8e8e8;
-            color: #333;
+        .event-list table th {
+            background-color: #bbdefb;
             font-weight: bold;
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f1f9ff;
         }
 
         tr:hover {
-            background-color: #f1f1f1;
+            background-color: #e0f7fa;
+        }
+
+        .event-list input[type="text"], .event-list input[type="datetime-local"], .event-list input[type="number"] {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 90%;
+            font-size: 14px;
+            text-align: center;
+            background-color: #f1f9ff;
         }
 
         /* Botones */
         .button {
-            padding: 8px 16px;
-            color: #ffffff;
+            padding: 10px 20px;
+            color: #333;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 14px;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
         }
 
         .edit-btn {
-            background-color: #4CAF50;
+            background-color: #64b5f6; /* Azul claro */
+            color: white;
+            font-weight: bold;
         }
 
         .edit-btn:hover {
-            background-color: #45a049;
+            background-color: #42a5f5;
         }
 
         .delete-btn {
-            background-color: #e74c3c;
+            background-color: #ef9a9a; /* Rojo claro */
+            color: white;
+            font-weight: bold;
         }
 
         .delete-btn:hover {
-            background-color: #c0392b;
+            background-color: #e57373;
         }
     </style>
 </head>
@@ -176,7 +188,7 @@
     <!-- Contenido principal -->
     <div class="main-content">
         <h1>Lista de Eventos</h1>
-        <table>
+        <table class="event-list">
             <tr>
                 <th>Nombre</th>
                 <th>Descripción</th>

@@ -21,12 +21,12 @@
         /* Barra lateral */
         .sidebar {
             width: 250px;
-            background-color: #4a90e2;
-            padding: 20px;
+            background-color: #1466c3;
+            padding: 45px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            color: white;
+            color: black;
         }
 
         .sidebar h2 {
@@ -84,7 +84,7 @@
         /* Cuadro de lista de eventos y estadísticas */
         .box {
             flex: 1;
-            background-color: #f9f9f9;
+            background-color: #b2dafa;
             border: 1px solid #ddd;
             border-radius: 8px;
             padding: 20px;
