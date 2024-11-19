@@ -230,7 +230,7 @@
 <div class="wrapper">
     <header>
         <div class="logo">
-            <span>🎵 Local</span>
+            <span>🎵 ViveCusco</span>
         </div>
         <nav>
             <ul>
