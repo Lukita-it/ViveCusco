@@ -320,7 +320,7 @@ $conn->close();
                 <p><strong>Entradas Vip:</strong> <?php echo htmlspecialchars($evento['entradasVipEvento']); ?> disponibles</p>
 
                 <!-- Mostrar tipos de entrada y sus costos -->
-                <p><strong>Tipos de Entrada:</strong></p>
+                <p><strong>Precios:</strong></p>
                 <ul>
                     <?php foreach ($entradas as $entrada): ?>
                         <li><?php echo htmlspecialchars($entrada['tipoEntrada']) . ": S/" . number_format($entrada['costoEntrada'], 2); ?></li>
