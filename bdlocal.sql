@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Nov 14, 2024 alle 18:45
+-- Creato il: Dic 10, 2024 alle 16:03
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -65,7 +65,7 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idCliente`, `nombreCliente`, `apellidoCliente`, `dniCliente`, `correoCliente`, `contrasenaCliente`, `imagenCliente`) VALUES
-(6, 'Marino', 'Villa', '69305968', 'marino@gmail.com', '$2y$10$CKmVzOAt7eXdukuE6H/bauq7XSWBrkcEIHi6eEC3o9ekxGwzEULiK', ''),
+(6, 'Marin', 'Villa', '69305968', 'marino@gmail.com', '$2y$10$CKmVzOAt7eXdukuE6H/bauq7XSWBrkcEIHi6eEC3o9ekxGwzEULiK', 'img/marino.png\r\n'),
 (7, 'Miriam', 'Villa', '59396039', 'villa@gmail.com', '$2y$10$IWKKsSvTWNMip8OUCT1oyu0CI5xVqhvBdL9pmuHt1JC/6LJKBM9eS', '');
 
 -- --------------------------------------------------------
@@ -89,9 +89,7 @@ INSERT INTO `entrada` (`idEntrada`, `idEvento`, `tipoEntrada`, `costoEntrada`) V
 (1, 1, 'General', 50.00),
 (2, 1, 'VIP', 100.00),
 (3, 2, 'General', 30.00),
-(4, 2, 'VIP', 70.00),
-(5, 3, 'General', 40.00),
-(6, 3, 'VIP', 80.00);
+(4, 2, 'VIP', 70.00);
 
 -- --------------------------------------------------------
 
@@ -117,8 +115,7 @@ CREATE TABLE `evento` (
 
 INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `entradasGeneralEvento`, `entradasVipEvento`, `imagenEvento`) VALUES
 (1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 173, 94, 15, 'img/rock.jpeg'),
-(2, 'Concierto Javier Solis', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg'),
-(3, 'Noche Electronica', 'Disfruta de una noche llena de energía con los mejores DJs de música electrónica.', '2024-12-15 20:00:00', 'Concierto', 156, 71, 32, 'img/noche.jpg');
+(2, 'Concierto Javier Cast', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg');
 
 -- --------------------------------------------------------
 
@@ -229,13 +226,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT per la tabella `entrada`
 --
 ALTER TABLE `entrada`
-  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT per la tabella `reserva`

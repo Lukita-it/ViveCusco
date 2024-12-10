@@ -5,6 +5,19 @@ include '../conexion.php';
 // Obtiene el id del evento desde la URL
 $idEvento = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
+$sqlOtrosEventos = "SELECT IdEvento, nombreEvento, imagenEvento FROM evento WHERE IdEvento != ? LIMIT 5";
+$stmtOtrosEventos = $conn->prepare($sqlOtrosEventos);
+$stmtOtrosEventos->bind_param("i", $idEvento);
+$stmtOtrosEventos->execute();
+$resultOtrosEventos = $stmtOtrosEventos->get_result();
+
+$otrosEventos = [];
+while ($evento = $resultOtrosEventos->fetch_assoc()) {
+    $otrosEventos[] = $evento;
+}
+
+$stmtOtrosEventos->close();
+
 // Consulta para obtener los detalles del evento, incluyendo entradas generales y VIP
 $sql = "SELECT nombreEvento, descripcionEvento, fechahoraevento, imagenEvento,
                entradasGeneralEvento, entradasVipEvento,
@@ -37,8 +50,10 @@ while ($entrada = $resultEntradas->fetch_assoc()) {
     $entradas[] = $entrada;
 }
 
+
 // Cierra la conexión a la base de datos
 $stmtEntradas->close();
+
 $conn->close();
 ?>
 <!DOCTYPE html>
@@ -54,6 +69,8 @@ $conn->close();
         }
 
         body {
+            background-image: url('./img/back-blu.jpg'); 
+            background-size: cover;
             font-family: 'Arial', sans-serif;
             background-color: #f0f0f0;
             color: #333;
@@ -61,6 +78,22 @@ $conn->close();
             flex-direction: column;
             box-sizing: border-box;
         }
+        body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: none; 
+    z-index: 1;
+}
+
+body > * {
+    position: relative;
+    z-index: 2;
+}
 
         .wrapper {
             display: flex;
@@ -134,7 +167,7 @@ $conn->close();
 
         .buttons a:hover {
             background-color: #1e90ff;
-            color: #ffffff;
+            color: #ffff;
         }
 
         .container {
@@ -187,7 +220,7 @@ $conn->close();
 
         .buy-btn {
             display: inline-block;
-            background-color: #f40707;
+            background-color: #008cf7;
             color: #fff;
             padding: 12px 20px;
             text-decoration: none;
@@ -234,17 +267,18 @@ $conn->close();
         }
 
         footer {
-            background-color: #333;
+            background-color: rgb(255, 255, 255);
             padding: 20px;
-            color: #fff;
-            border-top: 3px solid #ef2a07;
             text-align: center;
+            border-top: 1px solid #ddd;
+            margin-top: auto;
         }
 
         footer a {
             text-decoration: none;
-            color: #ff6347;
+            color: #333;
             font-size: 14px;
+            margin: 0 15px;
         }
 
         footer a:hover {
@@ -259,15 +293,74 @@ $conn->close();
         }
 
         .social img {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             filter: grayscale(100%);
-            transition: filter 0.3s ease;
+            transition: filter 0.3s;
         }
 
         .social img:hover {
-            filter: grayscale(0%);
+            filter: none;
         }
+        .other-events-section {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    width: auto;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.3s ease;
+}
+
+.carousel-item {
+    min-width: auto;
+    margin: 10px;
+    text-align: center;
+}
+
+.carousel-item img {
+    width: 200px;
+    height: 100px;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-item p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #333;
+}
+
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.carousel-prev {
+    left: 10px;
+}
+
+.carousel-next {
+    right: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -305,9 +398,7 @@ $conn->close();
     </header>
 
     <div class="container">
-        <h1>Detalles del Evento</h1>
-
-        <h2><?php echo htmlspecialchars($evento['nombreEvento']); ?></h2>
+        <h1><?php echo htmlspecialchars($evento['nombreEvento']); ?></h1>
 
         <div class="event-details">
             <img src="<?php echo htmlspecialchars($evento['imagenEvento']); ?>" alt="Evento <?php echo htmlspecialchars($evento['nombreEvento']); ?>">
@@ -320,7 +411,7 @@ $conn->close();
                 <p><strong>Entradas Vip:</strong> <?php echo htmlspecialchars($evento['entradasVipEvento']); ?> disponibles</p>
 
                 <!-- Mostrar tipos de entrada y sus costos -->
-                <p><strong>Precios:</strong></p>
+                <p><strong>Precios de Entrada:</strong></p>
                 <ul>
                     <?php foreach ($entradas as $entrada): ?>
                         <li><?php echo htmlspecialchars($entrada['tipoEntrada']) . ": S/" . number_format($entrada['costoEntrada'], 2); ?></li>
@@ -354,6 +445,24 @@ $conn->close();
                 <button type="submit" class="buy-btn" style="margin-top: 20px;">Comprar</button>
             </form>
         </div>
+        <div class="other-events-section">
+    <h2>Otros eventos</h2>
+    <div class="carousel-container">
+        <div class="carousel">
+            <?php foreach ($otrosEventos as $evento): ?>
+                <div class="carousel-item">
+                    <a href="evento.php?id=<?php echo htmlspecialchars($evento['IdEvento']); ?>">
+                        <img src="<?php echo htmlspecialchars($evento['imagenEvento']); ?>" alt="Evento <?php echo htmlspecialchars($evento['nombreEvento']); ?>">
+                        <p><?php echo htmlspecialchars($evento['nombreEvento']); ?></p>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <button class="carousel-prev">&#10094;</button>
+        <button class="carousel-next">&#10095;</button>
+    </div>
+</div>
+
     </div>
 
     <footer>
@@ -366,6 +475,24 @@ $conn->close();
         </div>
     </footer>
 </div>
+<script>
+    const carousel = document.querySelector('.carousel');
+    const prevButton = document.querySelector('.carousel-prev');
+    const nextButton = document.querySelector('.carousel-next');
+
+    let scrollAmount = 0;
+
+    prevButton.addEventListener('click', () => {
+        scrollAmount -= 300; // Ajusta el valor según el ancho de cada item
+        carousel.style.transform = `translateX(-${Math.max(scrollAmount, 0)}px)`;
+    });
+
+    nextButton.addEventListener('click', () => {
+        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+        scrollAmount = Math.min(scrollAmount + 300, maxScroll);
+        carousel.style.transform = `translateX(-${scrollAmount}px)`;
+    });
+</script>
 
 </body>
 </html>

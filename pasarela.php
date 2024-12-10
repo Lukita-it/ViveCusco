@@ -46,8 +46,24 @@ $conn->close();
             font-family: 'Arial', sans-serif;
             background-color: #f5f5f5;
             box-sizing: border-box;
+            background-image: url('./img/back-blu.jpg'); 
         }
+        body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    pointer-events: none; 
+    z-index: 1;
+}
 
+body > * {
+    position: relative;
+    z-index: 2;
+}
         header {
             background-color: rgb(255, 255, 255);
             padding: 10px 40px;
@@ -118,61 +134,105 @@ $conn->close();
         }
 
         .main-container {
-            display: flex; 
-            justify-content: space-between; 
-            max-width: 1200px; 
-            margin: 20px auto; 
-            flex-grow: 1; 
-        }
-
-        .container {
-            display: flex; 
-            width: 200%; 
-            height: calc(100% - 80px); 
-            min-height: 500px; 
-            padding: 20px; 
-        }
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto; 
+    flex-grow: 1;
+    width: 90%; /* Permite que ocupe todo el ancho de la página */
+    padding: 20px;
+    box-sizing: border-box;
+}
+.container {
+    display: flex;
+    gap: 20px; /* Espaciado entre columnas */
+    align-items: stretch;
+    width: 70%; /* Asegura que ocupe todo el ancho disponible */
+    margin: 40px auto;
+}
 
         .payment-methods, .ticket-summary {
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #fff;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
+    padding: 20px;
+    border-radius: 10px; /* Bordes redondeados */
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Espaciado interno entre elementos */
+    height: 100%; /* Hace que las celdas ocupen todo el espacio disponible */
+}
 
-        .payment-methods {
-            width: 500px; 
-            margin-right: 10px; 
-            min-height: 400px; 
-            padding: 70px; 
-        }
 
-        .ticket-summary {
-            width: 500px; 
-            min-height: 400px; 
-            padding: 70px; 
-        }
+.payment-methods {
+    flex: 1; /* Cada columna ocupa un ancho proporcional */
+    padding: 20px;
+    border-radius: 40px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        .payment-methods h2, .ticket-summary h2 {
-            margin-bottom: 20px;
-        }
+.ticket-summary {
+    flex: 1; /* Igual que la otra columna para balancear */
+    padding: 20px;
+    border-radius: 40px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
 
-        .payment-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+.payment-methods h2, .ticket-summary h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #ddd; /* Línea decorativa debajo del título */
+    padding-bottom: 40px;
+    margin-bottom: 20px;
+}
 
-        .payment-button {
-            width: auto; 
-            height: 60px; 
-            border-radius: 5px; 
-            border: none; 
-            cursor: pointer; 
-            background-size: contain; 
-            background-position: center; 
-            background-repeat: no-repeat; 
-        }
+.payment-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 80px; /* Espaciado entre botones */
+}
+
+.payment-button {
+    display: block;
+    width: 100%;
+    height: 60px;
+    border-radius: 8px; /* Bordes redondeados */
+    border: none;
+    cursor: pointer;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: transform 0.3s, box-shadow 0.3s; /* Animación en hover */
+}
+
+.payment-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-summary ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+    line-height: 1.6; /* Mejora la legibilidad */
+}
+
+.ticket-summary p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+.ticket-summary p strong {
+    color: #ff4500; /* Destaca el total */
+}
+
 
         .yape { background-image: url('./img/yape4.jpg');}
         .pagoefectivo { background-image: url('./img/pagoefectivo.jpeg'); }

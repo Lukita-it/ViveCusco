@@ -230,7 +230,7 @@
 <div class="wrapper">
     <header>
         <div class="logo">
-            <span>🎵 ViveCusco</span>
+            <span>🎵 Local</span>
         </div>
         <nav>
             <ul>
@@ -260,7 +260,7 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     while($evento = $result->fetch_assoc()) {
         echo '<div class="event-card">';
-        echo '<img src="' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
+        echo '<img src="./eventos/' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
         echo '<h3>' . $evento['nombreEvento'] . '</h3>';
         echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
         echo '<p>' . $evento['descripcionEvento'] . '</p>';

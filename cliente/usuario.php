@@ -7,27 +7,72 @@ if (!isset($_SESSION['usuario'])) {
 
 include '../conexion.php';
 
+$correo = $_SESSION['usuario'];
+$sql = "SELECT IdCliente, nombreCliente, apellidoCliente, imagenCliente FROM cliente WHERE correoCliente = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $correo);
+$stmt->execute();
+$result = $stmt->get_result();
+$usuario = $result->fetch_assoc();
+
+if ($usuario) {
+    $_SESSION['idCliente'] = $usuario['IdCliente'];
+    $_SESSION['nombre'] = $usuario['nombreCliente'];
+    $_SESSION['apellido'] = $usuario['apellidoCliente'];
+    $_SESSION['imagen'] = $usuario['imagenCliente'] ?? '../img/perfil.jpeg'; // Imagen predeterminada si no hay imagen.
+}
+
 // Verificar si se envió el formulario de edición
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $apellido = $_POST['apellido'];
     $correo = $_SESSION['usuario'];
+    $idCliente = $_SESSION['idCliente'];
+    $imagen = $_SESSION['imagen']; // Usar la imagen actual si no se ha subido una nueva
 
-    $sql = "UPDATE cliente SET nombreCliente = ?, apellidoCliente = ? WHERE correoCliente = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sss", $nombre, $apellido, $correo);
+    // Verificar si se subió una nueva imagen
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $uploadDir = '../img/';
+        $imageFileType = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
+        $imageName = uniqid('img_', true) . '.' . $imageFileType; // Nombre único
+        $targetFile = $uploadDir . $imageName;
 
-    if ($stmt->execute()) {
-        $_SESSION['nombre'] = $nombre;
-        $_SESSION['apellido'] = $apellido;
-        echo "<script>alert('Datos actualizados exitosamente.');</script>";
-    } else {
-        echo "<script>alert('Error al actualizar los datos.');</script>";
+        // Validar formato de la imagen
+        $validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        if (in_array($imageFileType, $validExtensions)) {
+            // Intentar mover la imagen al servidor
+            if (move_uploaded_file($_FILES['imagen']['tmp_name'], $targetFile)) {
+                // Eliminar la imagen anterior si no es la predeterminada
+                if ($_SESSION['imagen'] !== '../img/perfil.jpeg' && file_exists($_SESSION['imagen'])) {
+                    unlink($_SESSION['imagen']);
+                }
+
+                $imagen = $targetFile; // Nueva ruta de la imagen
+                $_SESSION['imagen'] = $imagen; // Actualizar en la sesión
+            } else {
+                echo "<script>alert('Error al mover la imagen al directorio destino.');</script>";
+            }
+        } else {
+            echo "<script>alert('El archivo no es un formato válido (JPG, JPEG, PNG, GIF).');</script>";
+        }
     }
 
-    $stmt->close();
+    // Actualizar los datos del cliente en la base de datos
+    $sql = "UPDATE cliente SET nombreCliente = ?, apellidoCliente = ?, imagenCliente = ? WHERE IdCliente = ?";
+    $stmt = $conn->prepare($sql);
+    if ($stmt) {
+        $stmt->bind_param('sssi', $nombre, $apellido, $imagen, $idCliente);
+        if ($stmt->execute()) {
+            echo "<script>alert('Perfil actualizado correctamente.');</script>";
+        } else {
+            echo "<script>alert('Error al actualizar la base de datos.');</script>";
+        }
+    } else {
+        echo "<script>alert('Error en la preparación de la consulta SQL.');</script>";
+    }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -213,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="container-left">
             <h2>Perfil del Usuario</h2>
             <div class="profile-picture" style="text-align: center;">
-                <img src="../img/perfil.jpeg" alt="Foto de Perfil">
+            <img src="<?php echo htmlspecialchars($_SESSION['imagen']); ?>" alt="foto">
             </div>
             <form method="POST">
                 <div class="form-group">
@@ -228,6 +273,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="email">Email</label>
                     <input type="email" id="email" value="<?php echo htmlspecialchars($_SESSION['usuario']); ?>" readonly>
                 </div>
+                <div class="form-group">
+        <label for="imagen">Foto de Perfil</label>
+        <input type="file" id="imagen" name="imagen" accept="image/*">
+    </div>
                 <div class="button-container">
                     <button type="submit">Guardar Cambios</button>
                 </div>

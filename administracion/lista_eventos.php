@@ -209,7 +209,7 @@
                     echo "<td><input type='datetime-local' name='fechahoraEvento' value='".$row['fechahoraEvento']."'></td>";
                     echo "<td><input type='text' name='categoriaEvento' value='".htmlspecialchars($row['categoriaEvento'])."'></td>";
                     echo "<td><input type='number' name='capacidadEvento' value='".$row['capacidadEvento']."'></td>";
-                    echo "<td><img src='../".$row['imagenEvento']."' alt='Imagen del Evento' width='50'></td>";
+                    echo "<td><img src='../eventos/".$row['imagenEvento']."' alt='Imagen del Evento' width='50'></td>";
                     echo "<td>
                             <button type='submit' name='editar' class='button edit-btn'>Editar</button>
                             <button type='submit' name='eliminar' class='button delete-btn' formaction='./eliminar_evento.php'>Eliminar</button>

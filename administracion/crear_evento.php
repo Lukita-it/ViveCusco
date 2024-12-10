@@ -129,6 +129,69 @@
     </style>
 </head>
 <body>
+<?php
+    // Incluir el archivo de conexión
+    include '../conexion.php';
+
+    // Procesar el formulario cuando se envíe
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $nombreEvento = $_POST['nombreEvento'];
+        $descripcionEvento = $_POST['descripcionEvento'];
+        $fechahoraEvento = $_POST['fechahoraEvento'];
+        $categoriaEvento = $_POST['categoriaEvento'];
+        $capacidadEvento = $_POST['capacidadEvento'];
+        $entradasGeneralEvento = $_POST['entradasGeneralEvento'];
+        $entradasVipEvento = $_POST['entradasVipEvento'];
+        $costoGeneral = $_POST['costoGeneral'];
+        $costoVip = $_POST['costoVip'];
+    
+        // Manejo de la imagen
+        $directorio = "../eventos/img/";
+        $nombreImagen = basename($_FILES["imagenEvento"]["name"]);
+        $rutaCompleta = $directorio . $nombreImagen;
+        $rutaRelativa = "img/" . $nombreImagen;
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($rutaCompleta, PATHINFO_EXTENSION));
+    
+        // Verificar si el archivo es una imagen
+        $check = getimagesize($_FILES["imagenEvento"]["tmp_name"]);
+        if ($check !== false) {
+            $uploadOk = 1;
+        } else {
+            echo "El archivo no es una imagen.";
+            $uploadOk = 0;
+        }
+    
+        // Intentar subir el archivo si todo está bien
+        if ($uploadOk == 1) {
+            if (move_uploaded_file($_FILES["imagenEvento"]["tmp_name"], $rutaCompleta)) {
+                // Insertar el evento
+                $sql = "INSERT INTO evento (nombreEvento, descripcionEvento, fechahoraEvento, categoriaEvento, capacidadEvento, imagenEvento, entradasGeneralEvento, entradasVipEvento) 
+                        VALUES ('$nombreEvento', '$descripcionEvento', '$fechahoraEvento', '$categoriaEvento', $capacidadEvento, '$rutaRelativa', $entradasGeneralEvento, $entradasVipEvento)";
+    
+                if ($conn->query($sql) === TRUE) {
+                    $idEvento = $conn->insert_id;
+    
+                    // Insertar las entradas
+                    $sqlEntrada = "INSERT INTO entrada (idEvento, tipoEntrada, costoEntrada) VALUES
+                                   ('$idEvento', 'General', $costoGeneral),
+                                   ('$idEvento', 'VIP', $costoVip)";
+    
+                    if ($conn->query($sqlEntrada) === TRUE) {
+                        echo "Evento y entradas creados con éxito";
+                    } else {
+                        echo "Error al crear las entradas: " . $conn->error;
+                    }
+                } else {
+                    echo "Error: " . $sql . "<br>" . $conn->error;
+                }
+            } else {
+                echo "Lo siento, hubo un error al subir tu imagen.";
+            }
+        }
+    }
+    
+    ?>
     <!-- Barra lateral -->
     <div class="sidebar">
         <h2>Local</h2>
@@ -167,6 +230,12 @@
 
                 <label for="entradasVipEvento">Entradas VIP:</label>
                 <input type="number" id="entradasVipEvento" name="entradasVipEvento" required>
+
+                <label for="costoGeneral">Costo General:</label>
+                <input type="number" id="costoGeneral" name="costoGeneral" step="0.01" required>
+
+                <label for="costoVip">Costo VIP:</label>
+                <input type="number" id="costoVip" name="costoVip" step="0.01" required>
 
                 <label for="imagenEvento">Imagen del Evento:</label>
                 <input type="file" id="imagenEvento" name="imagenEvento" accept="image/*" required>
