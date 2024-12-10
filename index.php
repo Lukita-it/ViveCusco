@@ -103,7 +103,7 @@
 
         .container {
             flex: 1;
-            max-width: 1200px;
+            width: 90%;
             margin: 0 auto;
             padding: 20px;
             text-align: center;
@@ -229,6 +229,9 @@
             gap: 20px;
             padding: 20px 0;
             scrollbar-width: thin;
+            position: relative;
+            max-width:80%;
+            margin: 0 auto;
         }
         .carousel::-webkit-scrollbar {
             height: 6px;
@@ -246,13 +249,13 @@
             position: relative;
         }
         .carousel-item h3 {
-    color: black; /* Cambia el color del título */
-    font-size: 18px; /* Tamaño de la fuente */
+    color: black; 
+    font-size: 18px; 
 }
 
 .carousel-item p {
-    color: black; /* Cambia el color de los párrafos */
-    font-size: 14px; /* Tamaño de la fuente */
+    color: black; 
+    font-size: 14px; 
 }
 
         .carousel-item img {
@@ -262,48 +265,6 @@
             object-fit: cover;
             margin-bottom: 15px;
         }
-        .swiper {
-        width: 100%;
-        padding: 20px 0;
-    }
-    .swiper-wrapper {
-        display: flex; /* Asegura alineación horizontal */
-    }
-    .swiper-slide {
-        width: auto; /* Ajusta automáticamente el tamaño */
-        text-align: center;
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        padding: 15px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-        flex-shrink: 0; /* Evita que se reduzca */
-    }
-    .swiper-slide img {
-        width: 100%;
-        max-height: 200px; /* Limita la altura */
-        border-radius: 10px;
-        object-fit: cover;
-        margin-bottom: 10px;
-    }
-    .swiper-slide h3 {
-        margin: 10px 0;
-        color: #555;
-    }
-    .swiper-slide p {
-        font-size: 0.9rem;
-        color: #555;
-    }
-    .swiper-slide .buy-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #007BFF;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-    }
-    .swiper-slide .buy-btn:hover {
-        background-color: #0056b3;
-    }
     </style>
 </head>
 <body>
@@ -311,7 +272,7 @@
 <div class="wrapper">
     <header>
         <div class="logo">
-            <span>🎵 Local</span>
+            <span>🎵 ViveCusco</span>
         </div>
         <nav>
             <ul>
