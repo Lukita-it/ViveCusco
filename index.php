@@ -223,6 +223,87 @@
         .social img:hover {
             filter: none;
         }
+        .carousel {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding: 20px 0;
+            scrollbar-width: thin;
+        }
+        .carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+        .carousel::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        .carousel-item {
+            flex: 0 0 300px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .carousel-item h3 {
+    color: black; /* Cambia el color del título */
+    font-size: 18px; /* Tamaño de la fuente */
+}
+
+.carousel-item p {
+    color: black; /* Cambia el color de los párrafos */
+    font-size: 14px; /* Tamaño de la fuente */
+}
+
+        .carousel-item img {
+            width: 100%;
+            height: 200px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        .swiper {
+        width: 100%;
+        padding: 20px 0;
+    }
+    .swiper-wrapper {
+        display: flex; /* Asegura alineación horizontal */
+    }
+    .swiper-slide {
+        width: auto; /* Ajusta automáticamente el tamaño */
+        text-align: center;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 15px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        flex-shrink: 0; /* Evita que se reduzca */
+    }
+    .swiper-slide img {
+        width: 100%;
+        max-height: 200px; /* Limita la altura */
+        border-radius: 10px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+    .swiper-slide h3 {
+        margin: 10px 0;
+        color: #555;
+    }
+    .swiper-slide p {
+        font-size: 0.9rem;
+        color: #555;
+    }
+    .swiper-slide .buy-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+    .swiper-slide .buy-btn:hover {
+        background-color: #0056b3;
+    }
     </style>
 </head>
 <body>
@@ -247,37 +328,64 @@
 
     <div class="container">
         <h1>Próximos Eventos</h1>
+        
+        <!-- Carrusel de eventos del próximo mes -->
+        <h2>Eventos del Próximo Mes</h2>
+        <div class="carousel">
+        <?php
+        include 'conexion.php';
+        $hoy = date('Y-m-d');
+        $proximo_mes = date('Y-m-d', strtotime('+1 month'));
+
+        $sql_carrusel = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento, imagenEvento 
+                         FROM evento 
+                         WHERE fechahoraevento >= '$hoy' AND fechahoraevento <= '$proximo_mes'";
+        $result_carrusel = $conn->query($sql_carrusel);
+
+        if ($result_carrusel->num_rows > 0) {
+            while ($evento = $result_carrusel->fetch_assoc()) {
+                echo '<div class="carousel-item">';
+                echo '<img src="./eventos/' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
+                echo '<h3>' . $evento['nombreEvento'] . '</h3>';
+                echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
+                echo '<p>' . $evento['descripcionEvento'] . '</p>';
+                echo '<a href="./eventos/evento.php?id=' . $evento['idEvento'] . '" class="buy-btn">Comprar Entradas</a>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No hay eventos próximos en el próximo mes.</p>';
+        }
+        ?>
+        </div>
+
+        <!-- Eventos posteriores al próximo mes -->
+        <h2>Eventos Futuros</h2>
         <div class="event-grid">
         <?php
-include 'conexion.php'; // Asegúrate de que la ruta es correcta
-$sql = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento,
-               entradasGeneralEvento, entradasVipEvento,
-               (entradasGeneralEvento + entradasVipEvento) AS entradasDisponiblesEvento,
-               imagenEvento 
-        FROM evento";
-$result = $conn->query($sql);
+        $sql_futuros = "SELECT idEvento, nombreEvento, descripcionEvento, fechahoraevento, imagenEvento 
+                        FROM evento 
+                        WHERE fechahoraevento > '$proximo_mes'";
+        $result_futuros = $conn->query($sql_futuros);
 
-if ($result->num_rows > 0) {
-    while($evento = $result->fetch_assoc()) {
-        echo '<div class="event-card">';
-        echo '<img src="./eventos/' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
-        echo '<h3>' . $evento['nombreEvento'] . '</h3>';
-        echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
-        echo '<p>' . $evento['descripcionEvento'] . '</p>';
-        echo '<p>Entradas disponibles: ' . $evento['entradasDisponiblesEvento'] . '</p>'; // Aquí se utiliza la suma calculada
-        echo '<a href="./eventos/evento.php?id=' . $evento['idEvento'] . '" class="buy-btn">Comprar Entradas</a>';
-        echo '</div>';
-    }
-} else {
-    echo '<p>No hay eventos disponibles.</p>';
-}
+        if ($result_futuros->num_rows > 0) {
+            while ($evento = $result_futuros->fetch_assoc()) {
+                echo '<div class="event-card">';
+                echo '<img src="./eventos/' . $evento['imagenEvento'] . '" alt="' . $evento['nombreEvento'] . '">';
+                echo '<h3>' . $evento['nombreEvento'] . '</h3>';
+                echo '<p>Fecha: ' . date('d M Y', strtotime($evento['fechahoraevento'])) . '</p>';
+                echo '<p>' . $evento['descripcionEvento'] . '</p>';
+                echo '<a href="./eventos/evento.php?id=' . $evento['idEvento'] . '" class="buy-btn">Comprar Entradas</a>';
+                echo '</div>';
+            }
+        } else {
+            echo '<p>No hay eventos programados después del próximo mes.</p>';
+        }
 
-$conn->close(); // Cierra la conexión
-?>
-
-
+        $conn->close();
+        ?>
         </div>
     </div>
+
 
     <footer>
         <a href="./privacy.html">Política de Privacidad</a> | 
@@ -289,5 +397,25 @@ $conn->close(); // Cierra la conexión
         </div>
     </footer>
 </div>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script>
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        breakpoints: {
+            640: { slidesPerView: 2 },
+            768: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
+        },
+    });
+</script>
 </body>
 </html>

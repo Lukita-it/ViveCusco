@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 10, 2024 alle 16:03
+-- Creato il: Dic 10, 2024 alle 22:48
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -89,7 +89,13 @@ INSERT INTO `entrada` (`idEntrada`, `idEvento`, `tipoEntrada`, `costoEntrada`) V
 (1, 1, 'General', 50.00),
 (2, 1, 'VIP', 100.00),
 (3, 2, 'General', 30.00),
-(4, 2, 'VIP', 70.00);
+(4, 2, 'VIP', 70.00),
+(13, 19, 'General', 100.00),
+(14, 19, 'VIP', 300.00),
+(15, 20, 'General', 10.00),
+(16, 20, 'VIP', 15.00),
+(17, 21, 'General', 60.00),
+(18, 21, 'VIP', 145.00);
 
 -- --------------------------------------------------------
 
@@ -114,8 +120,11 @@ CREATE TABLE `evento` (
 --
 
 INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `entradasGeneralEvento`, `entradasVipEvento`, `imagenEvento`) VALUES
-(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-10-15 20:00:00', 'Concierto', 173, 94, 15, 'img/rock.jpeg'),
-(2, 'Concierto Javier Cast', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg');
+(1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-12-21 20:00:00', 'Concierto', 173, 94, 15, 'img/rock.jpeg'),
+(2, 'Concierto Javier Cast', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg'),
+(19, 'Martin Garrix', 'mar', '2024-12-15 14:23:00', 'Concierto', 1600, 1200, 400, 'img/martin.jpeg'),
+(20, 'ke personajes', 'ke', '2025-01-16 11:22:00', 'Concierto', 1000, 500, 500, 'img/ke.jpg'),
+(21, 'grupo 5', '5', '2024-12-28 15:25:00', 'Concierto', 900, 450, 450, 'img/grupo.jpeg');
 
 -- --------------------------------------------------------
 
@@ -226,13 +235,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT per la tabella `entrada`
 --
 ALTER TABLE `entrada`
-  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT per la tabella `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT per la tabella `reserva`
