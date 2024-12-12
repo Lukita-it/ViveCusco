@@ -5,7 +5,9 @@ if (!isset($_SESSION['usuario'])) {
     exit();
 }
 
+
 include '../conexion.php';
+
 
 $correo = $_SESSION['usuario'];
 $sql = "SELECT IdCliente, nombreCliente, apellidoCliente, imagenCliente FROM cliente WHERE correoCliente = ?";
@@ -15,12 +17,14 @@ $stmt->execute();
 $result = $stmt->get_result();
 $usuario = $result->fetch_assoc();
 
+
 if ($usuario) {
     $_SESSION['idCliente'] = $usuario['IdCliente'];
     $_SESSION['nombre'] = $usuario['nombreCliente'];
     $_SESSION['apellido'] = $usuario['apellidoCliente'];
     $_SESSION['imagen'] = $usuario['imagenCliente'] ?? '../img/perfil.jpeg'; // Imagen predeterminada si no hay imagen.
 }
+
 
 // Verificar si se envió el formulario de edición
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,12 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idCliente = $_SESSION['idCliente'];
     $imagen = $_SESSION['imagen']; // Usar la imagen actual si no se ha subido una nueva
 
+
     // Verificar si se subió una nueva imagen
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
         $uploadDir = '../img/';
         $imageFileType = strtolower(pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION));
         $imageName = uniqid('img_', true) . '.' . $imageFileType; // Nombre único
         $targetFile = $uploadDir . $imageName;
+
 
         // Validar formato de la imagen
         $validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
@@ -47,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     unlink($_SESSION['imagen']);
                 }
 
+
                 $imagen = $targetFile; // Nueva ruta de la imagen
                 $_SESSION['imagen'] = $imagen; // Actualizar en la sesión
             } else {
@@ -56,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo "<script>alert('El archivo no es un formato válido (JPG, JPEG, PNG, GIF).');</script>";
         }
     }
+
 
     // Actualizar los datos del cliente en la base de datos
     $sql = "UPDATE cliente SET nombreCliente = ?, apellidoCliente = ?, imagenCliente = ? WHERE IdCliente = ?";
@@ -74,6 +82,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -87,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 0;
             font-family: Arial, sans-serif;
         }
-        
+       
         body {
             background-color: #f4f7fa;
             display: flex;
@@ -95,6 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             min-height: 100vh;
             color: #333;
         }
+
 
         header {
             background-color: #007bff;
@@ -106,10 +117,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-bottom: 4px solid #0056b3;
         }
 
+
         h1 {
             font-size: 24px;
             margin: 0;
         }
+
 
         .buttons a button {
             background-color: #fff;
@@ -121,10 +134,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: 0.3s;
         }
 
+
         .buttons a button:hover {
             background-color: #0056b3;
             color: #fff;
         }
+
 
         .main-container {
             display: flex;
@@ -134,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             padding: 40px;
             flex-grow: 1;
         }
+
 
         .profile-container {
             display: flex;
@@ -146,20 +162,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-bottom: 30px;
         }
 
+
         .container-left, .container-right {
             width: 50%;
             padding: 40px;
         }
 
+
         .container-left {
             border-right: 1px solid #e0e0e0;
         }
+
 
         .container-left h2, .container-right h2 {
             font-size: 20px;
             color: #007bff;
             margin-bottom: 20px;
         }
+
 
         .profile-picture img {
             width: 150px;
@@ -168,15 +188,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border: 3px solid #007bff;
         }
 
+
         .form-group {
             margin-bottom: 20px;
         }
+
 
         label {
             font-weight: bold;
             display: block;
             margin-bottom: 5px;
         }
+
 
         input[type="text"], input[type="email"] {
             width: 100%;
@@ -187,9 +210,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: 0.3s;
         }
 
+
         input[type="text"]:focus, input[type="email"]:focus {
             border-color: #007bff;
         }
+
 
         .button-container button {
             background-color: #007bff;
@@ -203,9 +228,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             width: 100%;
         }
 
+
         .button-container button:hover {
             background-color: #0056b3;
         }
+
 
         table {
             width: 100%;
@@ -213,17 +240,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             margin-top: 20px;
         }
 
+
         table, th, td {
             border: 1px solid #ddd;
             padding: 15px;
             text-align: left;
         }
 
+
         th {
             background-color: #f4f7fa;
             color: #007bff;
             font-weight: bold;
         }
+
 
         footer {
             text-align: center;
@@ -232,12 +262,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             border-top: 1px solid #ddd;
         }
 
+
         footer a {
             color: #007bff;
             text-decoration: none;
             margin: 0 10px;
             transition: 0.3s;
         }
+
 
         footer a:hover {
             color: #0056b3;
@@ -246,6 +278,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
 
+
 <header>
     <h1>Cuenta</h1>
     <div class="buttons">
@@ -253,13 +286,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </header>
 
+
 <div class="main-container">
     <div class="profile-container">
         <div class="container-left">
             <h2>Perfil del Usuario</h2>
-            <div class="profile-picture" style="text-align: center;">
-            <img src="<?php echo htmlspecialchars($_SESSION['imagen']); ?>" alt="foto">
-            </div>
             <form method="POST">
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
@@ -273,15 +304,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <label for="email">Email</label>
                     <input type="email" id="email" value="<?php echo htmlspecialchars($_SESSION['usuario']); ?>" readonly>
                 </div>
-                <div class="form-group">
-        <label for="imagen">Foto de Perfil</label>
-        <input type="file" id="imagen" name="imagen" accept="image/*">
-    </div>
                 <div class="button-container">
                     <button type="submit">Guardar Cambios</button>
                 </div>
             </form>
         </div>
+
 
         <div class="container-right">
             <h2>Entradas</h2>
@@ -310,11 +338,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 </div>
 
+
 <footer>
     <a href="../info.html">Quienes somos?</a>
     <a href="../contacto.html">Contactarse</a>
     <a href="../privacy.html">Política de Privacidad</a>
 </footer>
 
+
 </body>
 </html>
+
+
+

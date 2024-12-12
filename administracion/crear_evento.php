@@ -21,19 +21,17 @@
         /* Barra lateral */
         .sidebar {
             width: 250px;
-            background-color: #1976D2; /* Fondo azul similar a la imagen */
-            padding: 20px;
+            background-color: #1466c3;
+            padding: 45px;
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-            border-right: 1px solid #90caf9;
+            color: black;
         }
 
         .sidebar h2 {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #0d47a1;
             display: flex;
             align-items: center;
         }
@@ -45,16 +43,16 @@
 
         .sidebar a {
             font-size: 16px;
-            color: #ffffff; /* Cambiado a blanco para mejor contraste */
+            color: white;
             text-decoration: none;
             margin: 10px 0;
-            padding: 8px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
+            transition: background 0.3s;
+            padding: 8px 12px;
+            border-radius: 4px;
         }
 
         .sidebar a:hover {
-            background-color: #1565c0; /* Azul más oscuro al pasar el ratón */
+            background-color: #357ABD;
         }
 
         /* Contenido principal */
@@ -194,7 +192,7 @@
     ?>
     <!-- Barra lateral -->
     <div class="sidebar">
-        <h2>Local</h2>
+        <h2>ViveCusco</h2>
         <a href="./home.php">Principal</a>
         <a href="./crear_evento.php">Crear Evento</a>
         <a href="./lista_eventos.php">Lista de Eventos</a>

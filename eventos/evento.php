@@ -69,7 +69,7 @@ $conn->close();
         }
 
         body {
-            background-image: url('./img/back-blu.jpg'); 
+            background-image: url('./img/FqTK.gif'); 
             background-size: cover;
             font-family: 'Arial', sans-serif;
             background-color: #f0f0f0;
@@ -368,7 +368,7 @@ body > * {
 <div class="wrapper">
     <header>
         <div class="logo">
-            🎵 Local
+            🎵 ViveCusco
         </div>
         <nav>
             <ul>

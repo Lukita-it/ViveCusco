@@ -138,7 +138,7 @@
     ?>
 
     <div class="sidebar">
-        <h2>Local</h2>
+        <h2>ViveCusco</h2>
         <a href="./home.php">Principal</a>
         <a href="./crear_evento.php">Crear Evento</a>
         <a href="./lista_eventos.php">Lista de Eventos</a>

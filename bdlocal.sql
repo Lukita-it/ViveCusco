@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Dic 10, 2024 alle 22:48
+-- Creato il: Dic 12, 2024 alle 12:46
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.2.12
 
@@ -95,7 +95,9 @@ INSERT INTO `entrada` (`idEntrada`, `idEvento`, `tipoEntrada`, `costoEntrada`) V
 (15, 20, 'General', 10.00),
 (16, 20, 'VIP', 15.00),
 (17, 21, 'General', 60.00),
-(18, 21, 'VIP', 145.00);
+(18, 21, 'VIP', 145.00),
+(19, 22, 'General', 40.00),
+(20, 22, 'VIP', 60.00);
 
 -- --------------------------------------------------------
 
@@ -122,9 +124,10 @@ CREATE TABLE `evento` (
 INSERT INTO `evento` (`idEvento`, `nombreEvento`, `descripcionEvento`, `fechahoraEvento`, `categoriaEvento`, `capacidadEvento`, `entradasGeneralEvento`, `entradasVipEvento`, `imagenEvento`) VALUES
 (1, 'Concierto Rock', 'Celebra el rock peruano con bandas emblemáticas y nuevas promesas. ¡Una noche de energía y legado!', '2024-12-21 20:00:00', 'Concierto', 173, 94, 15, 'img/rock.jpeg'),
 (2, 'Concierto Javier Cast', 'Disfruta de una velada mágica con Javier Solis, quien presentará su nuevo álbum \"Ecos del Corazón\".', '2024-12-20 22:00:00', 'Presentacion', 50, 25, 14, 'img/javier.jpg'),
-(19, 'Martin Garrix', 'mar', '2024-12-15 14:23:00', 'Concierto', 1600, 1200, 400, 'img/martin.jpeg'),
-(20, 'ke personajes', 'ke', '2025-01-16 11:22:00', 'Concierto', 1000, 500, 500, 'img/ke.jpg'),
-(21, 'grupo 5', '5', '2024-12-28 15:25:00', 'Concierto', 900, 450, 450, 'img/grupo.jpeg');
+(19, 'Martin Garrix', 'martin', '2024-12-15 14:23:00', 'Concierto', 1600, 1200, 400, 'img/martin.jpeg'),
+(20, 'ke personajes', 'ke personajes', '2025-01-16 11:22:00', 'Concierto', 1000, 500, 500, 'img/ke.jpg'),
+(21, 'grupo 5', '5', '2024-12-28 15:25:00', 'Concierto', 900, 450, 450, 'img/grupo.jpeg'),
+(22, 'Tomorrow', 'tomorrow', '2025-02-06 16:49:00', 'Concierto', 152, 121, 31, 'img/tomorrow.jpg');
 
 -- --------------------------------------------------------
 
@@ -142,6 +145,13 @@ CREATE TABLE `reserva` (
   `estadoReserva` enum('PENDIENTE','CONFIRMADA','CANCELADA') NOT NULL,
   `idTransaccion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `reserva`
+--
+
+INSERT INTO `reserva` (`idReserva`, `idCliente`, `idEntrada`, `fechahoraReserva`, `cantidadEntradaReserva`, `tipoEntradaReserva`, `estadoReserva`, `idTransaccion`) VALUES
+(1, 6, 13, '2024-12-03 06:08:03', 1, 'General', 'CONFIRMADA', 1);
 
 -- --------------------------------------------------------
 
@@ -163,7 +173,7 @@ CREATE TABLE `transaccion` (
 --
 
 INSERT INTO `transaccion` (`idTransaccion`, `montoTransaccion`, `fechahoraTransaccion`, `estadoTransaccion`, `tipopagoTransaccion`, `idReserva`) VALUES
-(1, 100.00, '2024-12-01 12:35:00', 'COMPLETADA', 'Yape', NULL),
+(1, 100.00, '2024-12-01 12:35:00', 'COMPLETADA', 'Yape', 1),
 (2, 100.00, '2024-12-01 14:05:00', 'COMPLETADA', 'PagoEfectivo', NULL);
 
 --
@@ -235,13 +245,13 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT per la tabella `entrada`
 --
 ALTER TABLE `entrada`
-  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idEntrada` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT per la tabella `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idEvento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT per la tabella `reserva`

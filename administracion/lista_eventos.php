@@ -165,12 +165,12 @@
                         capacidadEvento=$capacidadEvento 
                       WHERE idEvento=$idEvento";
 
-        if ($conn->query($sqlUpdate) === TRUE) {
-            echo "Evento actualizado exitosamente.";
-        } else {
-            echo "Error al actualizar el evento: " . $conn->error;
-        }
-    }
+if ($conn->query($sqlUpdate) === TRUE) {
+    echo "<script>alert('Evento actualizado exitosamente.');</script>";
+} else {
+    echo "<script>alert('Error al actualizar el evento: " . $conn->error . "');</script>";
+}
+}
 
     // Consulta para obtener la lista de eventos
     $sql = "SELECT * FROM evento";
@@ -179,7 +179,7 @@
 
     <!-- Barra lateral -->
     <div class="sidebar">
-        <h2>Local</h2>
+        <h2>ViveCusco</h2>
         <a href="./home.php">Principal</a>
         <a href="./crear_evento.php">Crear Evento</a>
         <a href="./lista_eventos.php">Lista de Eventos</a>

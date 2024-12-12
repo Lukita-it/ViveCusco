@@ -290,13 +290,30 @@ body > * {
         .social img:hover {
             filter: none;
         }
+        .email-input h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.email-input input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
     </style>
 </head>
 <body>
     <div class="wrapper"></div>
     <header>
         <div class="logo">
-            <span>🎵 Local</span>
+            <span>🎵 ViveCusco</span>
         </div>
         <nav>
             <ul>
@@ -314,12 +331,16 @@ body > * {
     <div class="main-container">
         <div class="container">
             <div class="payment-methods">
+            <div class="email-input">
+            <h2>Ingresar correo</h2>
+            <input type="email" name="email" placeholder="Ingrese su correo electrónico" style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ddd; border-radius: 5px;">
+        </div>
                 <h2>Seleccionar Método de Pago</h2>
                 <div class="payment-buttons">
-                    <a href="https://www.yape.com.pe/" class="payment-button yape"></a>
-                    <a href="https://www.pagoefectivo.la/pe/" class="payment-button pagoefectivo"></a>
-                    <a href="https://www.mercadopago.com.pe/home" class="payment-button mercadopago"></a>
-                </div>
+    <button class="payment-button yape" onclick="validarCorreo('https://www.yape.com.pe/')"></button>
+    <button class="payment-button pagoefectivo" onclick="validarCorreo('https://www.pagoefectivo.la/pe/')"></button>
+    <button class="payment-button mercadopago" onclick="validarCorreo('https://www.mercadopago.com.pe/home')"></button>
+</div>
             </div>
 
             <div class="ticket-summary">
@@ -341,5 +362,16 @@ body > * {
             <a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="X"></a>
         </div>
     </footer>
+    <script>
+    function validarCorreo(url) {
+        var correo = document.querySelector('input[name="email"]').value;
+        if (correo === "") {
+            alert("Por favor, ingrese su correo electrónico.");
+        } else {
+            window.location.href = url;  // Redirige al usuario si el correo está ingresado
+        }
+    }
+</script>
+
 </body>
 </html>

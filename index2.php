@@ -1,4 +1,18 @@
-<?php include './conexion.php'; ?>
+<?php
+session_start();
+
+// Verificar si hay una sesión activa
+if (!isset($_SESSION['usuario'])) {
+    header("Location: ./login.html");
+    exit();
+}
+
+// Datos de sesión
+$nombreUsuario = $_SESSION['nombre'];
+$apellidoUsuario = $_SESSION['apellido'];
+$correoUsuario = $_SESSION['usuario'];
+$imagenUsuario = $_SESSION['imagen'] ?? '../img/perfil.jpeg'; // Imagen predeterminada si no está definida
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +29,7 @@
         }
 
         body {
-            background-image: url('./img/FqTK.gif'); 
+            background-image: url('./img/back-blu.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed; 
@@ -24,22 +38,6 @@
             padding: 0;
             color: #ffffff;
         }
-        body::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    pointer-events: none; 
-    z-index: 1;
-}
-
-body > * {
-    position: relative;
-    z-index: 2;
-}
 
         .wrapper {
             display: flex;
@@ -281,10 +279,9 @@ body > * {
             object-fit: cover;
             margin-bottom: 15px;
         }
-    </style>
+        </style>
 </head>
 <body>
-
 <div class="wrapper">
     <header>
         <div class="logo">
@@ -298,15 +295,23 @@ body > * {
             </ul>
         </nav>
         <div class="buttons">
-            <a href="./login/login.html" class="buy-btn">Ingresar</a>
-            <a href="./login/registro_usuario.html" class="buy-btn">Registrar</a>
+            <?php
+            if (isset($_SESSION['usuario'])) {
+                // Usuario conectado
+                echo '<span>Hola, ' . htmlspecialchars($_SESSION['usuario']['nombre']) . '</span>';
+                echo '<a href="./cuenta.php" class="buy-btn">Cuenta</a>';
+                echo '<a href="./logout.php" class="buy-btn">Logout</a>';
+            } else {
+                // Usuario no conectado
+                echo '<a href="./login/login.html" class="buy-btn">Ingresar</a>';
+                echo '<a href="./login/registro_usuario.html" class="buy-btn">Registrar</a>';
+            }
+            ?>
         </div>
     </header>
-
     <div class="container">
-        <h1>Nuestros Eventos</h1>
+        <h1>Próximos Eventos</h1>
         
-        <!-- Carrusel de eventos del próximo mes -->
         <h2>Eventos del Próximo Mes</h2>
         <div class="carousel">
         <?php
@@ -335,7 +340,6 @@ body > * {
         ?>
         </div>
 
-        <!-- Eventos posteriores al próximo mes -->
         <h2>Eventos Futuros</h2>
         <div class="event-grid">
         <?php
@@ -374,25 +378,6 @@ body > * {
         </div>
     </footer>
 </div>
-<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<script>
-    const swiper = new Swiper('.swiper', {
-        slidesPerView: 1,
-        spaceBetween: 20,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-        breakpoints: {
-            640: { slidesPerView: 2 },
-            768: { slidesPerView: 3 },
-            1024: { slidesPerView: 4 },
-        },
-    });
 </script>
 </body>
 </html>
